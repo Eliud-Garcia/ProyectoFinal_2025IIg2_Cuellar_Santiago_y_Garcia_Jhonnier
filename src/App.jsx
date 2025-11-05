@@ -9,12 +9,13 @@ import Mis_noticiasR from './Components/Dashboard_reportero/Mis_noticias/Mis_not
 import Perfil from './Components/Dashboard_reportero/Perfil/Perfil'
 import CreateNewsPage from './Pages/CreateNewsPage/CreateNewsPage.jsx';
 import Footer from './Components/Footer/Footer.jsx';
+import Header from './Components/Header/Header.jsx';
 
 const App = () => {
   return (
     <>
       <Router>
-        
+        <Header />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
