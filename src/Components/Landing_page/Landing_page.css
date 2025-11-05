@@ -1,0 +1,662 @@
+/* Estilos generales del componente Landing Page */
+.landing-wrapper {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: #FFFFFF;
+  color: #0B1E2D;
+  line-height: 1.6;
+}
+
+.landing-wrapper * {
+  box-sizing: border-box;
+}
+
+/* Navegación */
+.landing-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26, 174, 159, 0.1);
+  z-index: 1000;
+  padding: 1rem 0;
+  transition: all 0.3s ease;
+}
+
+.landing-nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.landing-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0B1E2D;
+  text-decoration: none;
+}
+
+.landing-logo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  
+}
+
+.landing-nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.landing-nav-links a {
+  text-decoration: none;
+  color: #0B1E2D;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.landing-nav-links a:hover {
+  color: #1AAE9F;
+}
+
+.landing-nav-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.landing-btn-explore {
+  background: #1AAE9F;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.landing-btn-explore:hover {
+  background: #158f82;
+  transform: translateY(-1px);
+}
+
+.landing-btn-join {
+  border: 2px solid #E63946;
+  color: #E63946;
+  background: transparent;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.landing-btn-join:hover {
+  background: #E63946;
+  color: white;
+}
+
+/* Sección Hero */
+.landing-hero {
+  margin-top: 80px;
+  padding: 4rem 2rem;
+  text-align: center;
+  background: #FFFFFF;
+}
+
+.landing-hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.landing-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #0B1E2D;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.landing-hero p {
+  font-size: 1.25rem;
+  color: #64748B;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.landing-hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 4rem;
+  flex-wrap: wrap;
+}
+
+.landing-btn-primary {
+  background: #1AAE9F;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.landing-btn-primary:hover {
+  background: #158f82;
+  transform: translateY(-2px);
+}
+
+.landing-btn-secondary {
+  border: 2px solid #E63946;
+  color: #E63946;
+  background: transparent;
+  padding: 0.9rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.landing-btn-secondary:hover {
+  background: #E63946;
+  color: white;
+}
+
+/* Grid de Categorías */
+.landing-category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.landing-category-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.landing-category-card:hover {
+  border-color: #1AAE9F;
+  box-shadow: 0 4px 20px rgba(26, 174, 159, 0.1);
+  transform: translateY(-2px);
+}
+
+.landing-category-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.landing-category-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0B1E2D;
+  margin: 0;
+}
+
+/* Sección de Categorías */
+.landing-categories {
+  padding: 4rem 2rem;
+  background: #F8FAF9;
+}
+
+.landing-categories-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.landing-section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0B1E2D;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.landing-section-p{
+  font-size: 1.2rem;
+  /* font-weight: bold; */
+  justify-self: center;
+  align-self: center;
+}
+
+.landing-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.landing-category-item {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.landing-category-item:hover {
+  border-color: #C4F1BE;
+  box-shadow: 0 8px 25px rgba(26, 174, 159, 0.15);
+  transform: translateY(-3px);
+}
+
+.landing-category-item .landing-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.landing-category-item h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #0B1E2D;
+  margin-bottom: 0.5rem;
+}
+
+.landing-category-item p {
+  color: #64748B;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Banner Destacado */
+.landing-featured-banner {
+  background: linear-gradient(135deg, #1AAE9F, #E63946);
+  color: white;
+  padding: 3rem 2rem;
+  margin: 4rem 0;
+}
+
+.landing-banner-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.landing-banner-tag {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.landing-banner-container h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.landing-banner-container p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+}
+
+.landing-btn-banner {
+  background: white;
+  color: #1AAE9F;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.landing-btn-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Sección All-in-One */
+.landing-all-in-one {
+  padding: 4rem 2rem;
+  background: #FFFFFF;
+}
+
+.landing-all-in-one-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.landing-topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.landing-topic-group h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #0B1E2D;
+  margin-bottom: 1.5rem;
+}
+
+.landing-topic-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.landing-topic-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #64748B;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.landing-topic-link:hover {
+  color: #1AAE9F;
+}
+
+.landing-topic-tag {
+  background: #C4F1BE;
+  color: #0B1E2D;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Banner Promocional */
+.landing-promo-banner {
+  background: #0B1E2D;
+  color: white;
+  padding: 4rem 2rem;
+}
+
+.landing-promo-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.landing-promo-container h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.landing-promo-container p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.landing-btn-promo {
+  background: #C4F1BE;
+  color: #0B1E2D;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.landing-btn-promo:hover {
+  background: #b8e8b1;
+  transform: translateY(-2px);
+}
+
+/* Sección de Contacto */
+.landing-contact {
+  padding: 4rem 2rem;
+  background: #F8FAF9;
+}
+
+.landing-contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.landing-contact h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0B1E2D;
+  margin-bottom: 1rem;
+}
+
+.landing-contact p {
+  font-size: 1.1rem;
+  color: #64748B;
+  margin-bottom: 3rem;
+}
+
+.landing-contact-form {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.landing-form-group {
+  text-align: left;
+}
+
+.landing-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #0B1E2D;
+}
+
+.landing-form-group input,
+.landing-form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.landing-form-group input:focus,
+.landing-form-group textarea:focus {
+  outline: none;
+  border-color: #1AAE9F;
+  box-shadow: 0 0 0 3px rgba(26, 174, 159, 0.1);
+}
+
+/* Footer */
+.landing-footer {
+  background: #0B1E2D;
+  color: white;
+  padding: 3rem 2rem 2rem;
+}
+
+.landing-footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.landing-footer-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #C4F1BE;
+}
+
+.landing-footer-section p,
+.landing-footer-section a {
+  color: #94A3B8;
+  text-decoration: none;
+  line-height: 1.8;
+}
+
+.landing-footer-section a:hover {
+  color: #C4F1BE;
+}
+
+.landing-social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.landing-social-icon {
+  width: 40px;
+  height: 40px;
+  background: #C4F1BE;
+  color: #0B1E2D;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.landing-social-icon:hover {
+  background: #1AAE9F;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.landing-footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid #334155;
+  color: #94A3B8;
+}
+
+/* Diseño Responsivo */
+@media (max-width: 768px) {
+  .landing-nav-links a:not(.landing-btn-explore):not(.landing-btn-join) {
+    display: none;
+  }
+
+  .landing-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .landing-hero p {
+    font-size: 1.1rem;
+  }
+
+  .landing-hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .landing-section-title {
+    font-size: 2rem;
+  }
+
+  .landing-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-topics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Estilos de accesibilidad - Focus */
+.landing-btn-primary:focus,
+.landing-btn-secondary:focus,
+.landing-btn-explore:focus,
+.landing-btn-join:focus,
+.landing-btn-banner:focus,
+.landing-btn-promo:focus,
+.landing-form-group input:focus,
+.landing-form-group textarea:focus,
+.landing-topic-link:focus,
+.landing-nav-links a:focus {
+  outline: 2px solid #1AAE9F;
+  outline-offset: 2px;
+}
+
+/* Soporte para modo de alto contraste */
+@media (prefers-contrast: high) {
+  .landing-category-card,
+  .landing-category-item {
+    border-width: 2px;
+  }
+  
+  .landing-btn-primary,
+  .landing-btn-explore {
+    border: 2px solid #1AAE9F;
+  }
+}
+
+/* Soporte para movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .landing-category-card,
+  .landing-category-item,
+  .landing-btn-primary,
+  .landing-btn-secondary,
+  .landing-btn-explore,
+  .landing-btn-join,
+  .landing-btn-banner,
+  .landing-btn-promo,
+  .landing-social-icon {
+    transition: none;
+  }
+  
+  .landing-category-card:hover,
+  .landing-category-item:hover,
+  .landing-btn-primary:hover,
+  .landing-btn-secondary:hover,
+  .landing-btn-explore:hover,
+  .landing-btn-join:hover,
+  .landing-btn-banner:hover,
+  .landing-btn-promo:hover,
+  .landing-social-icon:hover {
+    transform: none;
+  }
+}

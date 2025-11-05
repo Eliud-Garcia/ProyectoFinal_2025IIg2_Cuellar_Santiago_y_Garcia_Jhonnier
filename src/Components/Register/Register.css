@@ -1,0 +1,605 @@
+/* Estilos generales del componente Register */
+
+
+/* Contenedor principal del registro */
+.register-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  overflow: hidden;
+  min-height: 700px;
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Lado derecho - Formulario */
+.register-form-side {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: white;
+  overflow-y: auto;
+}
+
+.register-logo-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.register-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: #667eea;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.register-logo-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.register-form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.register-form-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.register-form-subtitle {
+  color: #718096;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* Estilos del formulario */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.register-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.register-form-group {
+  position: relative;
+}
+
+.register-form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+}
+
+.register-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.register-input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #a0aec0;
+  font-size: 1.1rem;
+  z-index: 2;
+}
+
+.register-form-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #f7fafc;
+  transition: all 0.3s ease;
+  color: #2d3748;
+}
+
+.register-form-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.register-form-input::placeholder {
+  color: #a0aec0;
+}
+
+.register-form-input.valid {
+  border-color: #4CAF50;
+  background: rgba(76, 175, 80, 0.05);
+}
+
+.register-form-input.invalid {
+  border-color: #f44336;
+  background: rgba(244, 67, 54, 0.05);
+}
+
+.register-password-toggle {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #a0aec0;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.register-password-toggle:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+/* Indicador de fortaleza de contraseña */
+.register-password-strength {
+  margin-top: 0.5rem;
+}
+
+.register-strength-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  color: #4a5568;
+}
+
+.register-strength-bar {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.register-strength-fill {
+  height: 100%;
+  width: 0%;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.register-strength-fill.weak {
+  width: 25%;
+  background: #f44336;
+}
+
+.register-strength-fill.fair {
+  width: 50%;
+  background: #FF9800;
+}
+
+.register-strength-fill.good {
+  width: 75%;
+  background: #2196F3;
+}
+
+.register-strength-fill.strong {
+  width: 100%;
+  background: #4CAF50;
+}
+
+/* Selección de rol */
+.register-role-selection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.register-role-option {
+  position: relative;
+}
+
+.register-role-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.register-role-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f7fafc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.register-role-input:checked + .register-role-label {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.register-role-label:hover {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+/* Checkbox de términos */
+.register-terms-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.register-terms-checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: #667eea;
+  cursor: pointer;
+  margin-top: 0.1rem;
+}
+
+.register-terms-label {
+  font-size: 0.9rem;
+  color: #4a5568;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.5;
+}
+
+.register-terms-label a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-terms-label a:hover {
+  text-decoration: underline;
+}
+
+/* Botones */
+.register-button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.register-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.register-button:hover::before {
+  left: 100%;
+}
+
+.register-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.register-button:active {
+  transform: translateY(0);
+}
+
+.register-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.register-button.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.register-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.register-loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: registerSpin 1s linear infinite;
+}
+
+@keyframes registerSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.register-loading-spinner.hidden {
+  display: none;
+}
+
+/* Divisor */
+.register-divider {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0 1.5rem 0;
+  color: #a0aec0;
+  font-size: 0.9rem;
+}
+
+.register-divider::before,
+.register-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.register-divider span {
+  padding: 0 1rem;
+  background: white;
+}
+
+/* Enlace de login */
+.register-login-link {
+  text-align: center;
+  color: #4a5568;
+  font-size: 0.95rem;
+}
+
+.register-login-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.register-login-link a:hover {
+  color: #5a67d8;
+  text-decoration: underline;
+}
+
+/* Mensajes de éxito/error */
+.register-message {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.register-message.hidden {
+  display: none;
+}
+
+.register-message.success {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.register-message.error {
+  background: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.2);
+}
+
+/* Mensajes de validación de campos */
+.register-field-error {
+  font-size: 0.8rem;
+  color: #f44336;
+  margin-top: 0.3rem;
+}
+
+.register-field-error.hidden {
+  display: none;
+}
+
+.register-field-success {
+  font-size: 0.8rem;
+  color: #4CAF50;
+  margin-top: 0.3rem;
+}
+
+.register-field-success.hidden {
+  display: none;
+}
+
+/* Diseño responsivo */
+@media (max-width: 1024px) {
+  .register-container {
+    max-width: 900px;
+    margin: 1rem;
+  }
+
+  .register-illustration-side,
+  .register-form-side {
+    padding: 2rem;
+  }
+
+  .register-welcome-title {
+    font-size: 2rem;
+  }
+
+  .register-illustration-icon {
+    font-size: 6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    grid-template-columns: 1fr;
+    margin: 0.5rem;
+    border-radius: 16px;
+  }
+
+  .register-illustration-side {
+    padding: 2rem 1.5rem;
+    min-height: 300px;
+  }
+
+  .register-welcome-title {
+    font-size: 1.8rem;
+  }
+
+  .register-welcome-subtitle {
+    font-size: 1rem;
+  }
+
+  .register-illustration-icon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .register-form-side {
+    padding: 2rem 1.5rem;
+  }
+
+  .register-form-title {
+    font-size: 1.8rem;
+  }
+
+  .register-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .register-role-selection {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-container {
+    margin: 0;
+    border-radius: 0;
+    min-height: 100vh;
+  }
+
+  .register-illustration-side {
+    padding: 1.5rem 1rem;
+    min-height: 250px;
+  }
+
+  .register-form-side {
+    padding: 1.5rem 1rem;
+  }
+
+  .register-welcome-title {
+    font-size: 1.5rem;
+  }
+
+  .register-illustration-icon {
+    font-size: 4rem;
+  }
+
+  .register-form-title {
+    font-size: 1.6rem;
+  }
+
+  .register-logo {
+    font-size: 1.5rem;
+  }
+
+  .register-logo-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
+
+/* Estilos de accesibilidad - Focus */
+.register-form-input:focus,
+.register-terms-checkbox:focus,
+.register-button:focus,
+.register-login-link a:focus,
+.register-role-input:focus + .register-role-label {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Soporte para modo de alto contraste */
+@media (prefers-contrast: high) {
+  .register-form-input {
+    border-width: 3px;
+  }
+  
+  .register-button {
+    border: 2px solid #667eea;
+  }
+}
+
+/* Soporte para movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .register-shape,
+  .register-floating-element,
+  .register-illustration-icon {
+    animation: none;
+  }
+  
+  .register-button::before {
+    transition: none;
+  }
+  
+  .register-loading-spinner {
+    animation: none;
+  }
+}
