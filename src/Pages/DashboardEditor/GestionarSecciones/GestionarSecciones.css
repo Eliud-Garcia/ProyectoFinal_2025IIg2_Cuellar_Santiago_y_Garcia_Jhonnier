@@ -1,0 +1,121 @@
+.gestion-container {
+  background: #f9fafc;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.header-secciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.btn-nueva {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabla {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tabla-header,
+.tabla-row {
+  display: grid;
+  grid-template-columns: 100px 150px 1fr 150px 150px;
+  align-items: center;
+  background: white;
+  border-radius: 10px;
+  padding: 10px 15px;
+}
+
+.tabla-header {
+  font-weight: bold;
+  background: #eef1f9;
+}
+
+.icono {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.estado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 22px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+.activo {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.inactivo {
+  color: #f44336;
+  font-weight: bold;
+}
+
+.btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}

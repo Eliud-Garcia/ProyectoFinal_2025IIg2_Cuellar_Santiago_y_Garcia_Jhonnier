@@ -1,0 +1,107 @@
+.editar-seccion-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-family: "Inter", sans-serif;
+}
+
+.editar-seccion-container h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.form-editar-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-editar-seccion label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.form-editar-seccion input,
+.form-editar-seccion textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  color: #111827;
+  background-color: #f9fafb;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-editar-seccion input:focus,
+.form-editar-seccion textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.form-editar-seccion textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Imagen preview (si quieres mostrarla después) */
+.form-editar-seccion .preview {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.form-editar-seccion .preview img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #e5e7eb;
+}
+
+/* Botones */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.btn-guardar,
+.btn-cancelar {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-guardar {
+  background-color: #3b82f6;
+  color: #fff;
+}
+
+.btn-guardar:hover {
+  background-color: #2563eb;
+  transform: scale(1.03);
+}
+
+.btn-cancelar {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.btn-cancelar:hover {
+  background-color: #d1d5db;
+  transform: scale(1.03);
+}
