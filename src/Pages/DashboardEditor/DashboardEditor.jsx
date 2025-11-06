@@ -1,22 +1,35 @@
-import React from "react";
-import { Outlet, NavLink } from "react-router-dom";
-
-import { supabase } from '../../supabaseClient.js';
+import React, { useState } from "react";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient.js";
+import "./DashboardEditor.css";
 
 const DashboardEditor = () => {
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setUser(null);
+    navigate("/");
   };
 
   return (
-    <div className="dashboard-page">
+    <div className={`dashboard-container ${menuOpen ? "menu-open" : ""}`}>
+      {/* Header para móvil */}
+      <header className="dashboard-header">
+        <div className="logo">
+          📰 <span>Amazon</span>News
+        </div>
+        <button
+          className="menu-toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+      </header>
+
+      {/* Sidebar */}
       <aside className="sidebar">
-        <h2 className="logo">📰 Dashboard</h2>
-
         <nav className="menu">
-
           <NavLink
             to="/dashboard-editor/listado-noticias"
             className={({ isActive }) =>
@@ -24,7 +37,7 @@ const DashboardEditor = () => {
             }
           >
             <span className="icon">📝</span>
-            <span>Gestionar Noticias</span>
+            <span>Noticias</span>
           </NavLink>
 
           <NavLink
@@ -33,17 +46,18 @@ const DashboardEditor = () => {
               `menu-item ${isActive ? "active" : ""}`
             }
           >
-            <span className="icon">➕</span>
-            <span>Gestionar Secciones</span>
+            <span className="icon">📂</span>
+            <span>Secciones</span>
           </NavLink>
 
           <button className="menu-item logout" onClick={handleLogout}>
             <span className="icon">🚪</span>
-            <span>Cerrar Sesión</span>
+            <span>Salir</span>
           </button>
         </nav>
       </aside>
 
+      {/* Contenido principal */}
       <main className="content">
         <Outlet />
       </main>

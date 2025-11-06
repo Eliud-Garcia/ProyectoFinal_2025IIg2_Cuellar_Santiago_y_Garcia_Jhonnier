@@ -3,6 +3,7 @@
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow-x: auto; /* por si hay tablas muy anchas */
 }
 
 .header-secciones {
@@ -10,6 +11,12 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.header-secciones h1 {
+  font-size: 1.8rem;
+  color: #1e293b;
 }
 
 .btn-nueva {
@@ -28,6 +35,7 @@
   gap: 10px;
 }
 
+/* ---------- Tabla en escritorio ---------- */
 .tabla-header,
 .tabla-row {
   display: grid;
@@ -41,6 +49,15 @@
 .tabla-header {
   font-weight: bold;
   background: #eef1f9;
+  color: #334155;
+}
+
+.tabla-row {
+  transition: transform 0.2s ease;
+}
+
+.tabla-row:hover {
+  transform: scale(1.01);
 }
 
 .icono {
@@ -118,4 +135,68 @@ input:checked + .slider:before {
 
 .btn:hover {
   transform: scale(1.1);
+}
+
+/* ---------- 🔹 Responsive (celular) ---------- */
+@media (max-width: 768px) {
+  .gestion-container {
+    padding: 1rem;
+  }
+
+  .tabla-header {
+    display: none; /* Ocultamos el encabezado fijo */
+  }
+
+  .tabla-row {
+    display: grid;
+    grid-template-columns: 1fr; /* las celdas se apilan verticalmente */
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    gap: 8px;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .tabla-row .celda {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .tabla-row .celda::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #475569;
+    font-size: 0.85rem;
+  }
+
+  .celda.nombre {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #1e293b;
+  }
+
+  .celda.descripcion {
+    font-size: 0.9rem;
+    color: #475569;
+  }
+
+  .estado {
+    flex-direction: row;
+    align-items: start;
+    justify-content: flex-start;
+  }
+
+  .celda.acciones {
+    display: flex;
+    align-items: start;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .icono {
+    width: 50px;
+    height: 50px;
+  }
 }

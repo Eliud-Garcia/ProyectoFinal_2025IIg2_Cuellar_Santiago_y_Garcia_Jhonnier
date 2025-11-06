@@ -106,13 +106,13 @@ const GestionarSecciones = () => {
 
         {secciones.map((s) => (
           <div className="tabla-row" key={s.id_seccion}>
-            <div className="celda">
+            <div className="celda" data-label="ICONO">
               <img src={s.url_image} alt={s.nombre} className="icono" />
             </div>
-            <div className="celda nombre">{s.nombre}</div>
-            <div className="celda descripcion">{s.descripcion}</div>
+            <div className="celda nombre" data-label="NOMBRE">{s.nombre}</div>
+            <div className="celda descripcion" data-label="DESCRIPCIÓN">{s.descripcion}</div>
 
-            <div className="celda estado">
+            <div className="celda estado" data-label="ESTADO">
               <label className="switch">
                 <input
                   type="checkbox"
@@ -126,12 +126,10 @@ const GestionarSecciones = () => {
               </span>
             </div>
 
-            <div className="celda acciones">
+            <div className="celda acciones" data-label="ACCIONES">
               <button
                 className="btn editar"
-                onClick={() =>
-                  navigate(`/dashboard-editor/editar/${s.id_seccion}`)
-                }
+                onClick={() => navigate(`/dashboard-editor/editar/${s.id_seccion}`)}
               >
                 ✏️
               </button>
