@@ -1,0 +1,154 @@
+/* --- Variables de Color (opcional pero recomendado) --- */
+:root {
+  --color-fondo: #f4f7f6;
+  --color-tarjeta: #ffffff;
+  --color-sombra: rgba(0, 0, 0, 0.08);
+  --color-texto-principal: #333;
+  --color-texto-secundario: #666;
+  --color-peligro: #e74c3c;
+  --color-primario: #007bff;
+  --color-primario-hover: #0056b3;
+  --color-secundario: #6c757d;
+  --color-secundario-hover: #5a6268;
+}
+
+/* --- Contenedor Principal (Pantalla Completa) --- */
+.access-denied {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+  background-color: var(--color-fondo);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  padding: 20px; /* Espacio para móviles */
+}
+
+/* --- La Tarjeta de Contenido --- */
+.denied-box {
+  background-color: var(--color-tarjeta);
+  border-radius: 16px; /* Bordes más suaves */
+  box-shadow: 0 10px 30px var(--color-sombra);
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #e0e0e0; /* Un borde sutil */
+  
+  /* Animación sutil de entrada */
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* --- Título (h1) --- */
+.denied-box h1 {
+  color: var(--color-peligro);
+  font-size: 2.25rem; /* 36px */
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* --- Mensaje (p) --- */
+.denied-box p {
+  color: var(--color-texto-secundario);
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.6;
+  margin-bottom: 32px; /* Más espacio antes de los botones */
+}
+
+/* --- Contenedor de Botones --- */
+.denied-links {
+  display: flex;
+  flex-direction: column; /* Apilados por defecto (móvil primero) */
+  gap: 12px; /* Espacio moderno entre botones */
+}
+
+/* --- Estilo Base de Botones (.btn) --- */
+.btn {
+  display: block;
+  padding: 14px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  
+  /* Transición suave para todos los cambios */
+  transition: all 0.3s ease;
+}
+
+/* --- Botón "Ir al inicio" (Primario) --- */
+.btn.home {
+  background-color: var(--color-primario);
+  color: #ffffff;
+}
+
+.btn.home:hover {
+  background-color: var(--color-primario-hover);
+  transform: translateY(-2px); /* Efecto de "levantar" */
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+}
+
+/* --- Botones "Iniciar sesión" y "Registrarse" (Secundarios/Outline) --- */
+.btn.login,
+.btn.register {
+  background-color: transparent;
+  color: var(--color-secundario);
+  border: 1px solid #d1d1d1;
+}
+
+.btn.login:hover,
+.btn.register:hover {
+  background-color: #f8f9fa; /* Un fondo muy sutil al pasar el ratón */
+  color: var(--color-secundario-hover);
+  border-color: #b1b1b1;
+  transform: translateY(-2px);
+}
+
+/* --- Animación de Entrada --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Responsividad (Opcional pero recomendado) --- */
+@media (min-width: 576px) {
+  /* En pantallas más grandes, ponemos los botones uno al lado del otro */
+  .denied-links {
+    flex-direction: row; /* En fila */
+    justify-content: center; /* Centrados */
+  }
+
+  /* Hacemos que los botones secundarios ocupen el espacio necesario */
+  .btn.login,
+  .btn.register {
+    flex: 1; /* Ocupan espacio flexible */
+  }
+
+  /* El botón de inicio puede ser más pequeño si queremos */
+  .btn.home {
+     flex: 1; /* Opcional: que todos sean iguales */
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 400px) {
+  .denied-box {
+    padding: 24px; /* Menos padding */
+  }
+
+  .denied-box h1 {
+    font-size: 1.8rem;
+  }
+
+  .denied-box p {
+    font-size: 1rem;
+  }
+}
