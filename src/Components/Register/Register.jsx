@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Register.css';
 import { supabase } from '../../supabaseClient.js';
 import { Link } from 'react-router-dom';
+import { logo_amazonia } from '../../../config.js';
 
 const Register = () => {
   // Estados para el formulario
@@ -293,7 +294,7 @@ const Register = () => {
           {/* Logo */}
           <div className="register-logo-section">
             <Link to="/" className="register-logo">
-              <img className="register-logo-icon" src="/logo_amazo.png"/>
+              <img className="register-logo-icon" src={logo_amazonia}/>
               <span>NewsPortal</span>
             </Link>
           </div>

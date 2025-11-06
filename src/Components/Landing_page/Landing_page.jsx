@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Landing_page.css';
 import { Link } from 'react-router-dom'
 import { supabase } from '../../supabaseClient.js'
+import {logo_amazonia} from "../../../config.js"
 
 const Landing_page = () => {
   // Estados para el formulario de contacto
@@ -77,7 +78,7 @@ const Landing_page = () => {
       <nav className="landing-nav">
         <div className="landing-nav-container">
           <a href="#" className="landing-logo" onClick={(e) => handleSmoothScroll(e, 'home')}>
-            <img className="landing-logo-icon" src="/logo_amazo.png" />
+            <img className="landing-logo-icon" src={logo_amazonia}/>
             <span>Amazonews</span>
           </a>
           <div className="landing-nav-links">
@@ -87,13 +88,14 @@ const Landing_page = () => {
             <a href="#contact" onClick={(e) => handleSmoothScroll(e, 'contact')}>Contactanos</a>
           </div>
           <div className="landing-nav-buttons">
-            <a
-              href="#categories"
+            <Link
+              // href="#categories"
+              to="/panel-noticias"
               className="landing-btn-explore"
-              onClick={(e) => handleSmoothScroll(e, 'categories')}
+              // onClick={(e) => {handleSmoothScroll(e, 'categories')}}
             >
               Explora todas las noticias
-            </a>
+            </Link>
             <Link to="/login" className="landing-btn-join">
               Se parte de nuestro equipo
             </Link>
@@ -142,7 +144,6 @@ const Landing_page = () => {
                 { console.log(seccion); }
                 return (
                   <div className="landing-category-item">
-                    {/* <span className="landing-icon">📚</span> */}
                     <h3>{seccion.nombre}</h3>
                     <p>{seccion.descripcion}</p>
                   </div>
@@ -163,7 +164,7 @@ const Landing_page = () => {
         </div>
       </section>
 
-      {/* Sección All-in-One */}
+      {/* Sección Sobre nosotros */}
       <section className="landing-all-in-one" id="about">
         <div className="landing-all-in-one-container">
           <h2 className="landing-section-title">Somos un grupo independiente de noticias locales</h2>

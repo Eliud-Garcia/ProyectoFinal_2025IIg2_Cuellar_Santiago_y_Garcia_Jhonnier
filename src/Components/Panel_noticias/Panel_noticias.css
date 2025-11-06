@@ -68,10 +68,9 @@
   gap: 0.5rem;
 }
 
-.logo-icono {
+.logo-icono-noticias-panel {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -387,7 +386,7 @@
 }
 
 /* Barra Lateral */
-.barra-lateral {
+.barra-lateral-panel-noticias {
   display: flex;
   flex-direction: column;
   gap: 2rem;

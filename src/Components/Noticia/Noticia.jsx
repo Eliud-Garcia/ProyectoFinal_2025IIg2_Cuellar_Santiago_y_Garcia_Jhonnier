@@ -41,10 +41,10 @@ const Noticia = () => {
   const formatearFecha = (fecha) => {
     if (!fecha) return 'Fecha no disponible';
     const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return fechaObj.toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
   };
 
@@ -69,13 +69,13 @@ const Noticia = () => {
   // Función para calcular tiempo relativo
   const calcularTiempoRelativo = (fecha) => {
     if (!fecha) return 'Fecha desconocida';
-    
+
     const ahora = new Date();
     const fechaComentario = new Date(fecha);
     const diferenciaMs = ahora - fechaComentario;
     const diferenciaHoras = Math.floor(diferenciaMs / (1000 * 60 * 60));
     const diferenciaDias = Math.floor(diferenciaHoras / 24);
-    
+
     if (diferenciaHoras < 1) {
       return 'Hace menos de 1 hora';
     } else if (diferenciaHoras === 1) {
@@ -96,13 +96,27 @@ const Noticia = () => {
         setCargando(true);
 
         // Obtener la noticia por ID
+
+        //hint
+
+        //"Try changing 'Usuario' to one of the following: 'Usuario!Noticia_id_usuario_creador_fkey', 'Usuario!Comentario'. Find the desired relationship in the 'details' key."
         const { data: noticiaData, error } = await supabase
           .from('Noticia')
-          .select('*')
+          .select(`*,
+            Seccion:Seccion (
+              nombre
+            ),
+            id_usuario_creador:Usuario!Noticia_id_usuario_creador_fkey (
+              nombre_completo,
+              id_usuario
+            )
+          `)
           .eq('id_noticia', id)
           .single();
 
+
         let noticiaObtenida = null;
+        console.log(noticiaData);
 
         if (error) {
           console.error('Error al obtener noticia:', error);
@@ -112,7 +126,7 @@ const Noticia = () => {
             .select('*')
             .eq('id', id)
             .single();
-          
+
           if (error2) {
             console.error('Error al obtener noticia alternativa:', error2);
           } else {
@@ -148,34 +162,26 @@ const Noticia = () => {
           setNoticiasSeccion(seccion || []);
         }
 
-        // Obtener comentarios (si existe tabla de comentarios)
-        // Por ahora, usaremos comentarios simulados
-        setComentarios([
-          {
-            id: 1,
-            autor: 'Dr. José García',
-            iniciales: 'JG',
-            fecha: new Date(Date.now() - 2 * 60 * 60 * 1000),
-            texto: 'Excelente artículo. Como médico, puedo confirmar que estos avances son realmente prometedores.',
-            likes: 12
-          },
-          {
-            id: 2,
-            autor: 'Laura Mendoza',
-            iniciales: 'LM',
-            fecha: new Date(Date.now() - 4 * 60 * 60 * 1000),
-            texto: 'Me parece fascinante, pero también me preocupa el aspecto ético.',
-            likes: 8
-          },
-          {
-            id: 3,
-            autor: 'Roberto Sánchez',
-            iniciales: 'RS',
-            fecha: new Date(Date.now() - 6 * 60 * 60 * 1000),
-            texto: '¿Cuándo estará disponible esta tecnología para hospitales públicos?',
-            likes: 15
+        // Obtener comentarios (Tabla de comentarios)
+        const obtenerComentarios = async () => {
+          try {
+            const { data: comentariosData, error: comentariosError } = await supabase
+              .from('Comentario')
+              .select(`*,
+                id_usuario:Usuario!Comentario_id_usuario_fkey(
+                  nombre_completo
+                )
+                `)
+              .eq('id_noticia', id)
+              .eq('id_usuario', noticiaObtenida.id_usuario_creador.id_usuario)
+              .order('created_at', { ascending: false });
+            setComentarios(comentariosData || []);
+            console.log(comentariosData);
+          } catch (error) {
+            console.error('Error al obtener comentarios:', error);
           }
-        ]);
+        }
+        obtenerComentarios();
 
       } catch (error) {
         console.error('Error al obtener noticia:', error);
@@ -208,7 +214,7 @@ const Noticia = () => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(noticia.contenido, 'text/html');
       const headings = doc.querySelectorAll('h2, h3');
-      
+
       const secciones = Array.from(headings).map((heading, index) => {
         const id = heading.id || `seccion-${index}`;
         if (!heading.id) heading.id = id;
@@ -227,9 +233,9 @@ const Noticia = () => {
   const manejarCompartir = (redSocial) => {
     const url = encodeURIComponent(window.location.href);
     const titulo = encodeURIComponent(noticia?.titulo || '');
-    
+
     let shareUrl = '';
-    switch(redSocial) {
+    switch (redSocial) {
       case 'facebook':
         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
         break;
@@ -248,51 +254,42 @@ const Noticia = () => {
       default:
         return;
     }
-    
+
     if (shareUrl) {
       window.open(shareUrl, '_blank', 'width=600,height=400');
     }
   };
 
-  // Manejar guardar noticia
-  const manejarGuardar = () => {
-    setGuardado(!guardado);
-    // Aquí puedes implementar la lógica para guardar en favoritos
-  };
 
   // Manejar enviar comentario
   const manejarEnviarComentario = async (e) => {
     e.preventDefault();
     if (!comentarioTexto.trim()) return;
 
-    setEnviandoComentario(true);
+    const { data, error } = await supabase
+      .from("Comentario")
+      .insert([
+        {
+          id_noticia: id,
+          id_usuario: noticia.id_usuario_creador.id_usuario,
+          contenido: comentarioTexto
+        },
+      ])
+      .select(`*,
+          id_usuario:Usuario!Comentario_id_usuario_fkey(
+            nombre_completo
+          )`);
 
-    // Simular envío de comentario
-    setTimeout(() => {
-      const nuevoComentario = {
-        id: comentarios.length + 1,
-        autor: 'Tú',
-        iniciales: 'TU',
-        fecha: new Date(),
-        texto: comentarioTexto,
-        likes: 0
-      };
+    if (error) {
+      console.error("Error al agregar comentario:", error);
+    } else {
+      setComentarios([data[0], ...comentarios]); // Actualizar la lista sin recargar
+    }
 
-      setComentarios([nuevoComentario, ...comentarios]);
-      setComentarioTexto('');
-      setEnviandoComentario(false);
-    }, 1000);
+
   };
 
-  // Manejar like en comentario
-  const manejarLikeComentario = (comentarioId) => {
-    setComentarios(comentarios.map(comentario => {
-      if (comentario.id === comentarioId) {
-        return { ...comentario, likes: comentario.likes + 1 };
-      }
-      return comentario;
-    }));
-  };
+
 
   // Manejar suscripción al newsletter
   const manejarNewsletter = (e) => {
@@ -336,8 +333,8 @@ const Noticia = () => {
   return (
     <div className="noticia">
       {/* Barra de progreso */}
-      <div 
-        className="barra-progreso" 
+      <div
+        className="barra-progreso"
         style={{ width: `${progresoLectura}%` }}
       ></div>
 
@@ -398,14 +395,14 @@ const Noticia = () => {
       </div>
 
       {/* Sección Hero */}
-      <section 
-        className="seccion-hero"
+      <section
+        className="seccion-hero-noticia"
         style={{ background: infoCategoria.gradiente }}
       >
-        <div className="imagen-hero">
-          {noticia.imagen_principal ? (
-            <img 
-              src={noticia.imagen_principal} 
+        <div className="imagen-hero-noticia">
+          {noticia.image_url ? (
+            <img
+              src={noticia.image_url}
               alt={noticia.titulo}
               className="imagen-hero-real"
             />
@@ -415,7 +412,7 @@ const Noticia = () => {
         </div>
         <div className="overlay-hero">
           <div className="contenido-hero">
-            <span className="categoria-hero">{noticia.categoria || 'General'}</span>
+            <span className="categoria-hero">{noticia.Seccion.nombre || 'General'}</span>
             <h1 className="titulo-hero">{noticia.titulo || 'Sin título'}</h1>
             <p className="subtitulo-hero">
               {noticia.extracto || noticia.contenido?.substring(0, 200) || 'Sin descripción disponible'}
@@ -431,51 +428,31 @@ const Noticia = () => {
           {/* Meta del Artículo */}
           <div className="meta-articulo">
             <div className="info-autor">
-              <div 
+              <div
                 className="avatar-autor"
                 style={{ background: infoCategoria.gradiente }}
               >
-                {obtenerInicialesAutor(noticia.nombre_autor || 'Anónimo')}
+                {obtenerInicialesAutor(noticia.id_usuario_creador.nombre_completo || 'Anónimo')}
               </div>
               <div className="detalles-autor">
-                <h3 className="nombre-autor">{noticia.nombre_autor || 'Anónimo'}</h3>
-                <p className="cargo-autor">Especialista en {noticia.categoria || 'General'}</p>
+                <h3 className="nombre-autor">{noticia.id_usuario_creador.nombre_completo || 'Anónimo'}</h3>
+                <p className="cargo-autor">Especialista en {noticia.Seccion.nombre || 'General'}</p>
               </div>
             </div>
             <div className="estadisticas-articulo">
               <div className="item-estadistica">
                 <span>📅</span>
-                <span>{formatearFecha(noticia.fecha_creacion)}</span>
+                <span>{formatearFecha(noticia.created_at)}</span>
               </div>
               <div className="item-estadistica">
                 <span>🕒</span>
                 <span>{calcularTiempoLectura(noticia.contenido)}</span>
               </div>
-              <div className="item-estadistica">
-                <span>👁️</span>
-                <span>{noticia.vistas || noticia.numero_vistas || 0} vistas</span>
-              </div>
-            </div>
-            <div className="acciones-articulo">
-              <button 
-                className="boton-accion"
-                onClick={() => window.print()}
-              >
-                <span>🖨️</span>
-                Imprimir
-              </button>
-              <button 
-                className={`boton-accion ${guardado ? 'guardado' : ''}`}
-                onClick={manejarGuardar}
-              >
-                <span>🔖</span>
-                {guardado ? 'Guardado' : 'Guardar'}
-              </button>
             </div>
           </div>
 
           {/* Cuerpo del Artículo */}
-          <div 
+          <div
             className="cuerpo-articulo"
             dangerouslySetInnerHTML={{ __html: noticia.contenido || '<p>Contenido no disponible</p>' }}
           ></div>
@@ -483,19 +460,18 @@ const Noticia = () => {
           {/* Biografía del Autor */}
           <div className="biografia-autor">
             <div className="header-biografia">
-              <div 
+              <div
                 className="avatar-biografia"
                 style={{ background: infoCategoria.gradiente }}
               >
-                {obtenerInicialesAutor(noticia.nombre_autor || 'Anónimo')}
+                {obtenerInicialesAutor(noticia.id_usuario_creador.nombre_completo || 'Anónimo')}
               </div>
               <div className="info-biografia">
-                <h3 className="nombre-biografia">{noticia.nombre_autor || 'Anónimo'}</h3>
-                <p className="cargo-biografia">Especialista en {noticia.categoria || 'General'}</p>
+                <h3 className="nombre-biografia">{noticia.id_usuario_creador.nombre_completo || 'Anónimo'}</h3>
               </div>
             </div>
             <p className="descripcion-biografia">
-              {noticia.biografia_autor || `Especialista con amplia experiencia en ${noticia.categoria || 'su área de expertise'}.`}
+              {`Especialista con amplia experiencia en ${noticia.Seccion.nombre || 'su área de expertise'}.`}
             </p>
             <div className="social-biografia">
               <a href="#" className="icono-social" target="_blank" rel="noopener noreferrer">🐦</a>
@@ -518,18 +494,18 @@ const Noticia = () => {
                   const gradiente = gradientes[indice % gradientes.length];
 
                   return (
-                    <article 
+                    <article
                       key={relacionada.id_noticia || relacionada.id || indice}
                       className="tarjeta-relacionada"
                       onClick={() => navigate(`/noticia/${relacionada.id_noticia || relacionada.id}`)}
                     >
-                      <div 
+                      <div
                         className="imagen-relacionada"
                         style={{ background: gradiente }}
                       >
                         {relacionada.imagen_principal ? (
-                          <img 
-                            src={relacionada.imagen_principal} 
+                          <img
+                            src={relacionada.imagen_principal}
                             alt={relacionada.titulo}
                             className="imagen-relacionada-real"
                           />
@@ -556,7 +532,7 @@ const Noticia = () => {
 
           {/* Sección de Comentarios */}
           <section className="seccion-comentarios">
-            <h2 className="titulo-comentarios">Comentarios ({comentarios.length})</h2>
+            <h2 className="titulo-comentarios">Comentarios ({comentarios.length || 0})</h2>
             <form className="formulario-comentario" onSubmit={manejarEnviarComentario}>
               <textarea
                 className="textarea-comentario"
@@ -565,8 +541,8 @@ const Noticia = () => {
                 onChange={(e) => setComentarioTexto(e.target.value)}
                 required
               ></textarea>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="boton-enviar-comentario"
                 disabled={enviandoComentario}
               >
@@ -575,31 +551,22 @@ const Noticia = () => {
             </form>
             <div className="lista-comentarios">
               {comentarios.map((comentario) => (
-                <div key={comentario.id} className="comentario">
+                <div key={comentario.id_comentario} className="comentario">
                   <div className="header-comentario">
-                    <div 
+                    <div
                       className="avatar-comentario"
                       style={{ background: infoCategoria.gradiente }}
                     >
-                      {comentario.iniciales}
+                      {comentario.iniciales || "RB"}
                     </div>
                     <div className="info-comentario">
-                      <h4 className="nombre-comentario">{comentario.autor}</h4>
+                      <h4 className="nombre-comentario">{comentario.id_usuario.nombre_completo || "Roberto"}</h4>
                       <span className="fecha-comentario">
-                        {calcularTiempoRelativo(comentario.fecha)}
+                        {calcularTiempoRelativo(comentario.created_at)}
                       </span>
                     </div>
                   </div>
-                  <p className="texto-comentario">{comentario.texto}</p>
-                  <div className="acciones-comentario">
-                    <button 
-                      className="boton-like"
-                      onClick={() => manejarLikeComentario(comentario.id)}
-                    >
-                      👍 {comentario.likes}
-                    </button>
-                    <button className="boton-responder">Responder</button>
-                  </div>
+                  <p className="texto-comentario">{comentario.contenido}</p>
                 </div>
               ))}
             </div>
@@ -607,7 +574,7 @@ const Noticia = () => {
         </main>
 
         {/* Barra Lateral */}
-        <aside className="barra-lateral">
+        <aside className="barra-lateral-noticia">
           {/* Tabla de Contenidos */}
           {seccionesRef.current.length > 0 && (
             <div className="widget-lateral">
@@ -646,13 +613,13 @@ const Noticia = () => {
                       className="articulo-mini"
                       onClick={() => navigate(`/noticia/${art.id_noticia || art.id}`)}
                     >
-                      <div 
+                      <div
                         className="miniatura-articulo"
                         style={{ background: gradiente }}
                       >
                         {art.imagen_principal ? (
-                          <img 
-                            src={art.imagen_principal} 
+                          <img
+                            src={art.imagen_principal}
                             alt={art.titulo}
                             className="miniatura-imagen"
                           />

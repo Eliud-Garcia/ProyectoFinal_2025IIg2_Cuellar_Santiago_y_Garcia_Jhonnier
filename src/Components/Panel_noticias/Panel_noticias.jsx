@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient.js';
 import './Panel_noticias.css';
-
+import {logo_amazonia} from "../../../config.js"
+import { useNavigate } from 'react-router-dom';
 const Panel_noticias = () => {
   // Estados para las noticias
   const [noticias, setNoticias] = useState([]);
@@ -10,7 +11,19 @@ const Panel_noticias = () => {
   const [noticiasTendencia, setNoticiasTendencia] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [terminoBusqueda, setTerminoBusqueda] = useState('');
+  const [secciones, setSecciones] = useState([]);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const obtenerSecciones = async () => {
+      const { data, error } = await supabase.from('Seccion').select('*');
+      if (data) {
+        console.log(data);
+        setSecciones(data);
+      }
+    }
+    obtenerSecciones()
+  }, [])
   // Categorías disponibles
   const categorias = [
     { nombre: 'Tecnología', icono: '💻', descripcion: 'Últimas innovaciones y avances tecnológicos' },
@@ -22,12 +35,12 @@ const Panel_noticias = () => {
   // Función para formatear fecha
   const formatearFecha = (fecha) => {
     if (!fecha) return 'Fecha no disponible';
-    
+
     const fechaObj = new Date(fecha);
-    const opciones = { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    const opciones = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     };
     return fechaObj.toLocaleDateString('es-ES', opciones);
   };
@@ -35,7 +48,7 @@ const Panel_noticias = () => {
   // Función para formatear fecha corta (para las tarjetas)
   const formatearFechaCorta = (fecha) => {
     if (!fecha) return '';
-    
+
     const fechaObj = new Date(fecha);
     const mes = fechaObj.toLocaleDateString('es-ES', { month: 'short' });
     const dia = fechaObj.getDate();
@@ -45,12 +58,12 @@ const Panel_noticias = () => {
   // Función para calcular tiempo relativo (para tendencias)
   const calcularTiempoRelativo = (fecha) => {
     if (!fecha) return 'Fecha desconocida';
-    
+
     const ahora = new Date();
     const fechaNoticia = new Date(fecha);
     const diferenciaMs = ahora - fechaNoticia;
     const diferenciaHoras = Math.floor(diferenciaMs / (1000 * 60 * 60));
-    
+
     if (diferenciaHoras < 1) {
       return 'Hace menos de 1 hora';
     } else if (diferenciaHoras === 1) {
@@ -65,31 +78,25 @@ const Panel_noticias = () => {
     const obtenerNoticias = async () => {
       try {
         setCargando(true);
-        
+
         // Obtener noticias con estado 'publicada' o 'aprobada' (ajustar según tu esquema)
         const { data: noticiasData, error } = await supabase
           .from('Noticia')
-          .select('*')
-          .eq('estado', 'publicada') // Ajustar según el estado de tus noticias publicadas
-          .order('fecha_creacion', { ascending: false })
-          .limit(20); // Limitar a 20 noticias más recientes
+          .select(`
+          *,
+          Seccion:Seccion (
+            nombre
+          )
+        `)
+          .eq('estado', 'publicada')
+          .order('created_at', { ascending: false });
+
 
         if (error) {
           console.error('Error al obtener noticias:', error);
-          // Si no hay campo 'estado', intentar obtener todas
-          const { data: todasLasNoticias, error: error2 } = await supabase
-            .from('Noticia')
-            .select('*')
-            .order('fecha_creacion', { ascending: false })
-            .limit(20);
-          
-          if (error2) {
-            console.error('Error al obtener todas las noticias:', error2);
-          } else {
-            setNoticias(todasLasNoticias || []);
-          }
         } else {
-          setNoticias(noticiasData || []);
+          setNoticias(noticiasData);
+          console.log(noticiasData);
         }
       } catch (error) {
         console.error('Error al obtener noticias:', error);
@@ -106,10 +113,10 @@ const Panel_noticias = () => {
     if (noticias.length > 0) {
       // La primera noticia es la principal (más reciente)
       setNoticiaPrincipal(noticias[0]);
-      
+
       // Las siguientes 4 son las recientes
       setNoticiasRecientes(noticias.slice(1, 5));
-      
+
       // Las siguientes 4 son las tendencias
       setNoticiasTendencia(noticias.slice(1, 5));
     }
@@ -134,27 +141,7 @@ const Panel_noticias = () => {
     }
   };
 
-  // Obtener gradiente de color según categoría
-  const obtenerGradienteCategoria = (categoria, indice) => {
-    const gradientes = [
-      'linear-gradient(135deg, #667eea, #764ba2)', // Tecnología
-      'linear-gradient(135deg, #4CAF50, #81C784)', // Deportes
-      'linear-gradient(135deg, #FF9800, #FFB74D)', // Política
-      'linear-gradient(135deg, #f44336, #EF5350)', // Cultura
-    ];
-    
-    const indiceCategoria = categorias.findIndex(cat => cat.nombre === categoria);
-    return indiceCategoria >= 0 ? gradientes[indiceCategoria] : gradientes[indice % gradientes.length];
-  };
 
-  if (cargando) {
-    return (
-      <div className="panel-cargando">
-        <div className="cargando-spinner"></div>
-        <p>Cargando noticias...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="panel-noticias">
@@ -162,10 +149,8 @@ const Panel_noticias = () => {
       <nav className="barra-navegacion">
         <div className="contenedor-navegacion">
           <a href="#" className="logo">
-            <div className="logo-icono">
-              N
-            </div>
-            <span>NewsPortal</span>
+            <img className="logo-icono-noticias-panel" src={logo_amazonia}/>
+            <span>AmazonNews</span>
           </a>
           <ul className="menu-navegacion">
             <li><a href="#noticias">Noticias</a></li>
@@ -190,47 +175,6 @@ const Panel_noticias = () => {
         </div>
       </nav>
 
-      {/* Sección Hero - Noticia Principal */}
-      {noticiaPrincipal && (
-        <section className="seccion-hero">
-          <div className="contenedor-hero">
-            <div className="contenido-hero">
-              <div className="meta-hero">
-                <span 
-                  className="etiqueta-categoria"
-                  style={{ background: obtenerGradienteCategoria(noticiaPrincipal.categoria, 0) }}
-                >
-                  {noticiaPrincipal.categoria || 'General'}
-                </span>
-                <span className="etiqueta-fecha">
-                  {formatearFecha(noticiaPrincipal.fecha_creacion)}
-                </span>
-              </div>
-              <h1 className="titulo-hero">{noticiaPrincipal.titulo || 'Sin título'}</h1>
-              <p className="extracto-hero">
-                {noticiaPrincipal.extracto || noticiaPrincipal.contenido?.substring(0, 200) || 'Sin descripción disponible'}
-              </p>
-              <a href="#" className="boton-leer-mas">Leer Más</a>
-            </div>
-            <div 
-              className="imagen-hero"
-              style={{ background: obtenerGradienteCategoria(noticiaPrincipal.categoria, 0) }}
-            >
-              {noticiaPrincipal.imagen_principal ? (
-                <img 
-                  src={noticiaPrincipal.imagen_principal} 
-                  alt={noticiaPrincipal.titulo}
-                  className="imagen-hero-real"
-                />
-              ) : (
-                <span className="emoji-hero">
-                  {categorias.find(cat => cat.nombre === noticiaPrincipal.categoria)?.icono || '📰'}
-                </span>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Contenido Principal */}
       <div className="contenido-principal">
@@ -243,17 +187,17 @@ const Panel_noticias = () => {
             </div>
           ) : (
             <div className="grid-noticias">
-              {noticiasFiltradas.slice(0, 8).map((noticia, indice) => (
-                <article key={noticia.id_noticia || noticia.id || indice} className="tarjeta-noticia">
-                  <div 
+              {noticiasFiltradas.map((noticia, indice) => (
+                <article key={noticia.id_noticia} className="tarjeta-noticia" onClick={() => navigate(`/noticia/${noticia.id_noticia}`)}>
+                  <div
                     className="imagen-noticia"
-                    style={{ background: obtenerGradienteCategoria(noticia.categoria, indice) }}
                   >
-                    {noticia.imagen_principal ? (
-                      <img 
-                        src={noticia.imagen_principal} 
+                    {noticia.image_url ? (
+                      <img
+                        src={noticia.image_url}
                         alt={noticia.titulo}
                         className="imagen-noticia-real"
+                        
                       />
                     ) : (
                       <span className="emoji-noticia">
@@ -263,7 +207,7 @@ const Panel_noticias = () => {
                   </div>
                   <div className="contenido-tarjeta">
                     <div className="meta-tarjeta">
-                      <span className="categoria-tarjeta">{noticia.categoria || 'General'}</span>
+                      <span className="categoria-tarjeta">{noticia.Seccion.nombre || 'General'}</span>
                       <span className="fecha-tarjeta">
                         {formatearFechaCorta(noticia.fecha_creacion)}
                       </span>
@@ -280,23 +224,23 @@ const Panel_noticias = () => {
         </section>
 
         {/* Barra Lateral */}
-        <aside className="barra-lateral">
+        <aside className="barra-lateral-panel-noticias">
           {/* Widget de Tendencias */}
           <div className="widget">
             <h3 className="titulo-widget">Tendencias</h3>
             {noticiasTendencia.length > 0 ? (
               noticiasTendencia.map((noticia, indice) => (
                 <div key={noticia.id_noticia || noticia.id || indice} className="item-tendencia">
-                  <div 
+                  <div
                     className="numero-tendencia"
-                    style={{ background: obtenerGradienteCategoria(noticia.categoria, indice) }}
+                  // style={{ background: obtenerGradienteCategoria(noticia.categoria, indice) }}
                   >
                     {indice + 1}
                   </div>
                   <div className="contenido-tendencia">
                     <h4 className="titulo-tendencia">{noticia.titulo || 'Sin título'}</h4>
                     <p className="meta-tendencia">
-                      {calcularTiempoRelativo(noticia.fecha_creacion)} • {noticia.categoria || 'General'}
+                      {calcularTiempoRelativo(noticia.fecha_creacion)} • {noticia.nombre || 'General'}
                     </p>
                   </div>
                 </div>
@@ -321,25 +265,20 @@ const Panel_noticias = () => {
         <div className="contenedor-categorias">
           <h2 className="titulo-seccion">Categorías Destacadas</h2>
           <div className="grid-categorias">
-            {categorias.map((categoria, indice) => {
-              const gradiente = obtenerGradienteCategoria(categoria.nombre, indice);
+            {secciones.map((seccion) => {
               return (
-                <div 
-                  key={categoria.nombre} 
+                <div
+                  key={seccion.nombre}
                   className="tarjeta-categoria"
-                  onClick={() => {
-                    // Filtrar por categoría
-                    setTerminoBusqueda(categoria.nombre);
-                  }}
+                  onClick={() => navigate(`/seccion/${seccion.nombre}`)}
                 >
-                  <div 
+                  <img
                     className="icono-categoria"
-                    style={{ background: gradiente }}
-                  >
-                    {categoria.icono}
-                  </div>
-                  <h3 className="titulo-categoria">{categoria.nombre}</h3>
-                  <p className="descripcion-categoria">{categoria.descripcion}</p>
+                    // style={{ background: gradiente }}
+                    src={seccion.url_image}
+                  />
+                  <h3 className="titulo-categoria">{seccion.nombre}</h3>
+                  <p className="descripcion-categoria">{seccion.descripcion}</p>
                 </div>
               );
             })}

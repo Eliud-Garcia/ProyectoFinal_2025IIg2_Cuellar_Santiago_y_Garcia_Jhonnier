@@ -3,10 +3,12 @@ import './Login.css';
 import { Link } from 'react-router-dom'
 import { supabase } from '../../supabaseClient.js';
 import { useNavigate} from 'react-router-dom';
+import {logo_amazonia} from "../../../config.js"
 
 
 const Login = () => {
   // Estados para el formulario
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -21,6 +23,7 @@ const Login = () => {
 
     // Ocultar mensajes previos
     setMessage({ type: '', text: '' });
+    console.log(logo_amazonia);
 
     // Mostrar estado de carga
     setIsLoading(true);
@@ -79,7 +82,7 @@ const Login = () => {
           {/* Logo */}
           <div className="login-logo-section">
             <Link to="/" className="login-logo">
-              <img className="login-logo-icon" src="/logo_amazo.png" />
+              <img className="login-logo-icon" src={logo_amazonia}/>
               <span>NewsPortal</span>
             </Link>
           </div>
