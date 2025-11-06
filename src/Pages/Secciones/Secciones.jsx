@@ -60,28 +60,28 @@ const Secciones = () => {
   };
 
   // Obtener información de la categoría actual
-  const categoriaActual = categorias[categoria] || categorias['Tecnología'];
+  const categoriaActual = categorias['Tecnología'];
 
   // Función para formatear fecha
   const formatearFecha = (fecha) => {
     if (!fecha) return 'Fecha no disponible';
     const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return fechaObj.toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
   };
 
   // Función para calcular tiempo relativo
   const calcularTiempoRelativo = (fecha) => {
     if (!fecha) return 'Fecha desconocida';
-    
+
     const ahora = new Date();
     const fechaNoticia = new Date(fecha);
     const diferenciaMs = ahora - fechaNoticia;
     const diferenciaHoras = Math.floor(diferenciaMs / (1000 * 60 * 60));
-    
+
     if (diferenciaHoras < 1) {
       return 'Hace menos de 1 hora';
     } else if (diferenciaHoras === 1) {
@@ -114,30 +114,22 @@ const Secciones = () => {
     const obtenerNoticias = async () => {
       try {
         setCargando(true);
-        
+
         // Obtener noticias de la categoría
         let query = supabase
           .from('Noticia')
-          .select('*')
-          .ilike('categoria', categoria || 'Tecnología')
-          .order('fecha_creacion', { ascending: false });
+          .select(`
+            *,
+            id_categoria:Seccion!Noticia_id_categoria_fkey(
+              nombre
+            )
+          `)
+          .eq('id_categoria.nombre', 'Deportes');
 
-        // Intentar filtrar por estado si existe
         const { data: noticiasData, error } = await query;
 
         if (error) {
           console.error('Error al obtener noticias:', error);
-          // Si falla, intentar sin filtro de estado
-          const { data: todasLasNoticias, error: error2 } = await supabase
-            .from('Noticia')
-            .select('*')
-            .ilike('categoria', categoria || 'Tecnología')
-            .order('fecha_creacion', { ascending: false });
-          
-          if (!error2) {
-            setNoticias(todasLasNoticias || []);
-            setTotalNoticias(todasLasNoticias?.length || 0);
-          }
         } else {
           setNoticias(noticiasData || []);
           setTotalNoticias(noticiasData?.length || 0);
@@ -159,12 +151,12 @@ const Secciones = () => {
           .filter(cat => cat.nombre !== categoriaActual.nombre)
           .sort((a, b) => b.cantidad - a.cantidad)
           .slice(0, 4);
-        
+
         setCategoriasRelacionadas(relacionadas);
 
         // Tags populares (simulado - puedes obtenerlos de una tabla de tags si existe)
-        const tags = ['Inteligencia Artificial', 'Smartphones', 'Blockchain', 'Realidad Virtual', 
-                     '5G', 'Ciberseguridad', 'IoT', 'Machine Learning', 'Cloud Computing', 'Startups'];
+        const tags = ['Inteligencia Artificial', 'Smartphones', 'Blockchain', 'Realidad Virtual',
+          '5G', 'Ciberseguridad', 'IoT', 'Machine Learning', 'Cloud Computing', 'Startups'];
         setTagsPopulares(tags);
 
       } catch (error) {
@@ -174,7 +166,7 @@ const Secciones = () => {
       }
     };
 
-    if (categoria) {
+    if (categoriaActual) {
       obtenerNoticias();
       setPaginaActual(1); // Resetear página al cambiar categoría
     }
@@ -255,7 +247,7 @@ const Secciones = () => {
   const generarNumerosPagina = () => {
     const numeros = [];
     const mostrarPaginas = 5; // Mostrar 5 números a la vez
-    
+
     if (totalPaginas <= mostrarPaginas) {
       // Si hay pocas páginas, mostrar todas
       for (let i = 1; i <= totalPaginas; i++) {
@@ -288,7 +280,7 @@ const Secciones = () => {
         numeros.push(totalPaginas);
       }
     }
-    
+
     return numeros;
   };
 
@@ -301,27 +293,14 @@ const Secciones = () => {
     );
   }
 
+  let noticiasFiltradas2=noticiasPagina.filter(noticia =>{
+    return noticia.estado==="publicada";
+  });
+
+  console.log(noticiasFiltradas2);
+
   return (
     <div className="secciones">
-      {/* Navegación */}
-      <nav className="barra-navegacion">
-        <div className="contenedor-navegacion">
-          <Link to="/" className="logo">
-            <div className="logo-icono">N</div>
-            <span>NewsPortal</span>
-          </Link>
-          <ul className="menu-navegacion">
-            <li><Link to="/">Inicio</Link></li>
-            <li><Link to="/noticias">Noticias</Link></li>
-            <li><Link to="/secciones/Tecnología" className={categoria === 'Tecnología' ? 'active' : ''}>Tecnología</Link></li>
-            <li><Link to="/secciones/Deportes" className={categoria === 'Deportes' ? 'active' : ''}>Deportes</Link></li>
-            <li><Link to="/secciones/Política" className={categoria === 'Política' ? 'active' : ''}>Política</Link></li>
-            <li><Link to="/secciones/Cultura" className={categoria === 'Cultura' ? 'active' : ''}>Cultura</Link></li>
-          </ul>
-          <button className="boton-menu-movil">☰</button>
-        </div>
-      </nav>
-
       {/* Breadcrumb */}
       <section className="breadcrumb">
         <div className="contenedor-breadcrumb">
@@ -334,7 +313,7 @@ const Secciones = () => {
       </section>
 
       {/* Header de Categoría */}
-      <section 
+      <section
         className="header-categoria"
         style={{ background: categoriaActual.gradiente }}
       >
@@ -365,40 +344,7 @@ const Secciones = () => {
       <div className="contenido-principal">
         {/* Sección de Artículos */}
         <main className="seccion-articulos">
-          {/* Barra de Filtros */}
-          <div className="barra-filtros">
-            <div className="header-filtros">
-              <h2 className="titulo-filtros">Filtrar Artículos</h2>
-              <span className="contador-resultados">{noticiasFiltradas.length} resultados</span>
-            </div>
-            <div className="opciones-filtros">
-              <button
-                className={`boton-filtro ${filtroActivo === 'recientes' ? 'activo' : ''}`}
-                onClick={() => manejarFiltro('recientes')}
-              >
-                Más Recientes
-              </button>
-              <button
-                className={`boton-filtro ${filtroActivo === 'leidas' ? 'activo' : ''}`}
-                onClick={() => manejarFiltro('leidas')}
-              >
-                Más Leídas
-              </button>
-              <button
-                className={`boton-filtro ${filtroActivo === 'destacadas' ? 'activo' : ''}`}
-                onClick={() => manejarFiltro('destacadas')}
-              >
-                Destacadas
-              </button>
-              <button
-                className={`boton-filtro ${filtroActivo === 'semana' ? 'activo' : ''}`}
-                onClick={() => manejarFiltro('semana')}
-              >
-                Esta Semana
-              </button>
-            </div>
-          </div>
-
+          
           {/* Grid de Artículos */}
           {noticiasPagina.length === 0 ? (
             <div className="sin-articulos">
@@ -407,26 +353,15 @@ const Secciones = () => {
           ) : (
             <>
               <div className="grid-articulos">
-                {noticiasPagina.map((noticia, indice) => {
-                  const gradientes = [
-                    'linear-gradient(135deg, #667eea, #764ba2)',
-                    'linear-gradient(135deg, #4CAF50, #81C784)',
-                    'linear-gradient(135deg, #FF9800, #FFB74D)',
-                    'linear-gradient(135deg, #f44336, #EF5350)',
-                    'linear-gradient(135deg, #9C27B0, #BA68C8)',
-                    'linear-gradient(135deg, #00BCD4, #4DD0E1)'
-                  ];
-                  const gradiente = gradientes[indice % gradientes.length];
-
+                {noticiasFiltradas2.map((noticia) => {
                   return (
-                    <article key={noticia.id_noticia || noticia.id || indice} className="tarjeta-articulo">
-                      <div 
+                    <article key={noticia.id_noticia} className="tarjeta-articulo">
+                      <div
                         className="imagen-articulo"
-                        style={{ background: gradiente }}
                       >
-                        {noticia.imagen_principal ? (
-                          <img 
-                            src={noticia.imagen_principal} 
+                        {noticia.image_url ? (
+                          <img
+                            src={noticia.image_url}
                             alt={noticia.titulo}
                             className="imagen-articulo-real"
                           />
@@ -450,7 +385,7 @@ const Secciones = () => {
                         </p>
                         <div className="pie-articulo">
                           <div className="autor-articulo">
-                            <div className="avatar-autor" style={{ background: gradiente }}>
+                            <div className="avatar-autor">
                               {obtenerInicialesAutor(noticia.nombre_autor || 'Anónimo')}
                             </div>
                             <div className="info-autor">
@@ -523,7 +458,7 @@ const Secciones = () => {
                   to={`/secciones/${cat.nombre}`}
                   className="enlace-categoria"
                 >
-                  <div 
+                  <div
                     className="icono-enlace-categoria"
                     style={{ background: cat.gradiente }}
                   >

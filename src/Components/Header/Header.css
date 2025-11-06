@@ -1,13 +1,19 @@
-.header {
-  background: #fff;
+/* ==== NAV GENERAL ==== */
+.landing-header {
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid #e9ecef;
-  width: 100%;
   position: sticky;
   top: 0;
+  width: 100%;
   z-index: 100;
+  height: 70px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-.nav-container {
+.landing-nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,134 +22,171 @@
   margin: 0 auto;
 }
 
-.logo a {
+/* ==== LOGO ==== */
+.landing-logo {
   display: flex;
   align-items: center;
   gap: 8px;
   font-weight: 700;
-  font-size: 1.2rem;
-  color: #0b132b;
-  text-decoration: none;
-}
-
-.logo-icon {
-  background: linear-gradient(135deg, #18c29c, #00a896);
-  color: #fff;
-  border-radius: 8px;
-  font-weight: bold;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-links a {
   text-decoration: none;
   color: #0b132b;
-  font-weight: 500;
-  transition: color 0.2s ease;
+  font-size: 1.3rem;
 }
 
-.nav-links a:hover {
+.landing-logo-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.logo-text .highlight {
   color: #00a896;
 }
 
-.nav-buttons {
+/* ==== NAV LINKS ==== */
+.landing-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  transition: all 0.3s ease;
+}
+
+.landing-nav-links a {
+  color: #0b132b;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.landing-nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #00a896;
+  transition: width 0.3s ease;
+}
+
+.landing-nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ==== BUTTONS ==== */
+.landing-nav-buttons {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.btn {
+.landing-btn {
   border: none;
   cursor: pointer;
   padding: 8px 16px;
   border-radius: 6px;
   font-weight: 600;
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-.btn.explore {
+.landing-btn.explore {
   background: #00a896;
   color: white;
 }
 
-.btn.join {
+.landing-btn.explore:hover {
+  background: #02977f;
+}
+
+.landing-btn.join {
   border: 1.5px solid #d90429;
   color: #d90429;
   background: transparent;
 }
 
-.btn.logout {
-  border: 1.5px solid #888;
-  color: #555;
-  background: transparent;
+.landing-btn.join:hover {
+  background: #d90429;
+  color: white;
 }
 
-.username {
-  font-weight: 500;
-  color: #0b132b;
-}
-
-/* ===== Menú móvil ===== */
+/* ==== MENU TOGGLE ==== */
 .menu-toggle {
   display: none;
-  font-size: 1.5rem;
-  background: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
   border: none;
+  background: none;
   cursor: pointer;
+  width: 30px;
+  height: 25px;
 }
 
-.mobile-auth {
-  display: none;
+.bar {
+  width: 100%;
+  height: 3px;
+  background: #0b132b;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
-/* === RESPONSIVE === */
+.menu-toggle.active .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.menu-toggle.active .bar:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* ==== MOBILE ==== */
 @media (max-width: 768px) {
-  .nav-links {
+  .landing-nav-links {
     position: absolute;
-    top: 60px;
-    right: 0;
-    background: white;
+    top: 64px;
+    left: 0;
     width: 100%;
+    background: white;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    padding: 20px 0;
+    gap: 20px;
+    padding: 24px 0;
     border-top: 1px solid #e9ecef;
     display: none;
+    animation: slideDown 0.3s ease forwards;
   }
 
-  .nav-links.open {
+  .landing-nav-links.open {
     display: flex;
   }
 
-  .menu-toggle {
-    display: block;
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .nav-buttons {
+  .landing-nav-buttons {
     display: none;
   }
 
-  .mobile-auth {
+  .landing-mobile-buttons {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    margin-top: 12px;
     border-top: 1px solid #f1f1f1;
     padding-top: 10px;
   }
 
-  .mobile-auth .username {
-    color: #0b132b;
-    font-weight: 500;
+  .menu-toggle {
+    display: flex;
   }
 }

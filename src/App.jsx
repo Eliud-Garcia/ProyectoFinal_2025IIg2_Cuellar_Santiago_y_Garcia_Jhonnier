@@ -11,8 +11,8 @@ import CrearNoticia from './Pages/Dashboard_reportero/CrearNoticia/CrearNoticia.
 import Footer from './Components/Footer/Footer.jsx';
 import Header from './Components/Header/Header.jsx';
 import Noticia from './Components/Noticia/Noticia.jsx';
-import Seccion from './Components/Secciones/Secciones.jsx'
-import PanelNoticia from "./Components/Panel_noticias/Panel_noticias.jsx"
+import Seccion from './Pages/Secciones/Secciones.jsx'
+import PanelNoticia from "./Pages/Panel_noticias/Panel_noticias.jsx"
 
 
 const App = () => {
@@ -23,16 +23,17 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
           <Route path="/" element={<Landing_page />} />
-
+          <Route path='/panel-noticias' element={<PanelNoticia />} />
+          <Route path="/seccion/:nombre" element={<Seccion />} />
+          <Route path="/noticia/:id" element={<Noticia />} />
           <Route path="/dashboard-reportero" element={<Dashboard_reportero />}>
             <Route path="crear-noticia" element={<CrearNoticia />} />
             <Route path="mis-noticias" element={<Mis_noticiasR />} />
           </Route>
 
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
       </Router>
     </>
   )

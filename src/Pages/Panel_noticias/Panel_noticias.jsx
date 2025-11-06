@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient.js';
 import './Panel_noticias.css';
-import {logo_amazonia} from "../../../config.js"
+import { logo_amazonia } from "../../../config.js"
 import { useNavigate } from 'react-router-dom';
 const Panel_noticias = () => {
   // Estados para las noticias
@@ -24,13 +24,6 @@ const Panel_noticias = () => {
     }
     obtenerSecciones()
   }, [])
-  // Categorías disponibles
-  const categorias = [
-    { nombre: 'Tecnología', icono: '💻', descripcion: 'Últimas innovaciones y avances tecnológicos' },
-    { nombre: 'Deportes', icono: '⚽', descripcion: 'Resultados, análisis y noticias deportivas' },
-    { nombre: 'Política', icono: '🏛️', descripcion: 'Análisis político y noticias gubernamentales' },
-    { nombre: 'Cultura', icono: '🎭', descripcion: 'Arte, entretenimiento y eventos culturales' },
-  ];
 
   // Función para formatear fecha
   const formatearFecha = (fecha) => {
@@ -96,7 +89,6 @@ const Panel_noticias = () => {
           console.error('Error al obtener noticias:', error);
         } else {
           setNoticias(noticiasData);
-          console.log(noticiasData);
         }
       } catch (error) {
         console.error('Error al obtener noticias:', error);
@@ -145,37 +137,21 @@ const Panel_noticias = () => {
 
   return (
     <div className="panel-noticias">
-      {/* Navegación */}
-      <nav className="barra-navegacion">
-        <div className="contenedor-navegacion">
-          <a href="#" className="logo">
-            <img className="logo-icono-noticias-panel" src={logo_amazonia}/>
-            <span>AmazonNews</span>
-          </a>
-          <ul className="menu-navegacion">
-            <li><a href="#noticias">Noticias</a></li>
-            <li><a href="#secciones">Secciones</a></li>
-            <li><a href="#acerca">Acerca de</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-          </ul>
-          <div className="contenedor-busqueda">
-            <input
-              type="text"
-              className="input-busqueda"
-              placeholder="Buscar noticias..."
-              value={terminoBusqueda}
-              onChange={(e) => setTerminoBusqueda(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && manejarBusqueda()}
-            />
-            <button className="boton-buscar" onClick={manejarBusqueda}>
-              Buscar
-            </button>
-          </div>
-          <button className="boton-menu-movil">☰</button>
-        </div>
-      </nav>
 
-
+      {/* buscador */}
+      <div className="contenedor-busqueda">
+        <input
+          type="text"
+          className="input-busqueda"
+          placeholder="Buscar noticias..."
+          value={terminoBusqueda}
+          onChange={(e) => setTerminoBusqueda(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && manejarBusqueda()}
+        />
+        <button className="boton-buscar" onClick={manejarBusqueda}>
+          Buscar
+        </button>
+      </div>
       {/* Contenido Principal */}
       <div className="contenido-principal">
         {/* Noticias Recientes */}
@@ -197,7 +173,7 @@ const Panel_noticias = () => {
                         src={noticia.image_url}
                         alt={noticia.titulo}
                         className="imagen-noticia-real"
-                        
+
                       />
                     ) : (
                       <span className="emoji-noticia">
@@ -285,54 +261,6 @@ const Panel_noticias = () => {
           </div>
         </div>
       </section>
-
-      {/* Pie de Página */}
-      <footer className="pie-pagina">
-        <div className="contenedor-pie">
-          <div className="seccion-pie">
-            <h4 className="titulo-pie">NewsPortal</h4>
-            <p>Tu fuente confiable de noticias actualizadas las 24 horas del día.</p>
-            <div className="iconos-sociales">
-              <a href="#" className="icono-social" target="_blank" rel="noopener noreferrer">f</a>
-              <a href="#" className="icono-social" target="_blank" rel="noopener noreferrer">📷</a>
-              <a href="#" className="icono-social" target="_blank" rel="noopener noreferrer">🐦</a>
-              <a href="#" className="icono-social" target="_blank" rel="noopener noreferrer">▶</a>
-            </div>
-          </div>
-          <div className="seccion-pie">
-            <h4 className="titulo-pie">Secciones</h4>
-            <ul className="lista-pie">
-              <li><a href="#">Noticias Nacionales</a></li>
-              <li><a href="#">Noticias Internacionales</a></li>
-              <li><a href="#">Deportes</a></li>
-              <li><a href="#">Tecnología</a></li>
-              <li><a href="#">Cultura</a></li>
-            </ul>
-          </div>
-          <div className="seccion-pie">
-            <h4 className="titulo-pie">Empresa</h4>
-            <ul className="lista-pie">
-              <li><a href="#">Acerca de Nosotros</a></li>
-              <li><a href="#">Contacto</a></li>
-              <li><a href="#">Política de Privacidad</a></li>
-              <li><a href="#">Términos de Uso</a></li>
-              <li><a href="#">Publicidad</a></li>
-            </ul>
-          </div>
-          <div className="seccion-pie">
-            <h4 className="titulo-pie">Contacto</h4>
-            <ul className="lista-pie">
-              <li>📧 info@newsportal.com</li>
-              <li>📞 +1 (555) 123-4567</li>
-              <li>📍 123 News Street, Ciudad</li>
-              <li>🕒 Lunes - Viernes: 9:00 - 18:00</li>
-            </ul>
-          </div>
-        </div>
-        <div className="pie-inferior">
-          <p>© 2025 NewsPortal. Todos los derechos reservados.</p>
-        </div>
-      </footer>
     </div>
   );
 };

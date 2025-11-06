@@ -74,42 +74,6 @@ const Landing_page = () => {
 
   return (
     <div className="landing-wrapper">
-      {/* Navegación */}
-      <nav className="landing-nav">
-        <div className="landing-nav-container">
-          <a href="#" className="landing-logo" onClick={(e) => handleSmoothScroll(e, 'home')}>
-            <img className="landing-logo-icon" src={logo_amazonia}/>
-            <span>Amazonews</span>
-          </a>
-          <div className="landing-nav-links">
-            <a href="#home" onClick={(e) => handleSmoothScroll(e, 'home')}>Home</a>
-            <a href="#categories" onClick={(e) => handleSmoothScroll(e, 'categories')}>Secciones</a>
-            <a href="#about" onClick={(e) => handleSmoothScroll(e, 'about')}>Sobre nosotros</a>
-            <a href="#contact" onClick={(e) => handleSmoothScroll(e, 'contact')}>Contactanos</a>
-          </div>
-          <div className="landing-nav-buttons">
-            <Link
-              // href="#categories"
-              to="/panel-noticias"
-              className="landing-btn-explore"
-              // onClick={(e) => {handleSmoothScroll(e, 'categories')}}
-            >
-              Explora todas las noticias
-            </Link>
-            <Link to="/login" className="landing-btn-join">
-              Se parte de nuestro equipo
-            </Link>
-            {/* <a 
-              href="#contact" 
-              className="landing-btn-join"
-              onClick={(e) => handleSmoothScroll(e, 'contact')}
-            >
-              Se parte de nuestro equipo
-            </a> */}
-          </div>
-        </div>
-      </nav>
-
       {/* Sección Hero */}
       <section className="landing-hero" id="home">
         <div className="landing-hero-container">
