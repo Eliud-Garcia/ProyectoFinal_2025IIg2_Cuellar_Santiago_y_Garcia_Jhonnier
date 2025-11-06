@@ -12,6 +12,10 @@ import Footer from './Components/Footer/Footer.jsx';
 import Dashboard_reportero from './Pages/Dashboard_reportero/Dashboard_reportero.jsx'
 import Mis_noticiasR from './Pages/Dashboard_reportero/Mis_noticias/Mis_noticias.jsx'
 import CrearNoticia from './Pages/Dashboard_reportero/CrearNoticia/CrearNoticia.jsx';
+import Noticia from './Components/Noticia/Noticia.jsx';
+import Seccion from './Pages/Secciones/Secciones.jsx'
+import PanelNoticia from "./Pages/Panel_noticias/Panel_noticias.jsx"
+
 
 //editor
 import DashboardEditor from './Pages/DashboardEditor/DashboardEditor.jsx';
@@ -26,9 +30,10 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
           <Route path="/" element={<Landing_page />} />
-
+          <Route path='/panel-noticias' element={<PanelNoticia />} />
+          <Route path="/seccion/:nombre" element={<Seccion />} />
+          <Route path="/noticia/:id" element={<Noticia />} />
           <Route path="/dashboard-reportero" element={<Dashboard_reportero />}>
             <Route path="crear-noticia" element={<CrearNoticia />} />
             <Route path="mis-noticias" element={<Mis_noticiasR />} />

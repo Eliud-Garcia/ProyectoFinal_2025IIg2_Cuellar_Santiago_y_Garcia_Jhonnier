@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Landing_page.css';
 import { Link } from 'react-router-dom'
 import { supabase } from '../../supabaseClient.js'
+import {logo_amazonia} from "../../../config.js"
 
 const Landing_page = () => {
   // Estados para el formulario de contacto
@@ -73,7 +74,6 @@ const Landing_page = () => {
 
   return (
     <div className="landing-wrapper">
-     
       {/* Sección Hero */}
       <section className="landing-hero" id="home">
         <div className="landing-hero-container">
@@ -108,7 +108,6 @@ const Landing_page = () => {
                 { console.log(seccion); }
                 return (
                   <div className="landing-category-item">
-                    {/* <span className="landing-icon">📚</span> */}
                     <h3>{seccion.nombre}</h3>
                     <p>{seccion.descripcion}</p>
                   </div>
@@ -129,7 +128,7 @@ const Landing_page = () => {
         </div>
       </section>
 
-      {/* Sección All-in-One */}
+      {/* Sección Sobre nosotros */}
       <section className="landing-all-in-one" id="about">
         <div className="landing-all-in-one-container">
           <h2 className="landing-section-title">Somos un grupo independiente de noticias locales</h2>

@@ -1,95 +1,99 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { supabase } from "../../supabaseClient.js";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
+import { logo_amazonia } from "../../../config";
 import "./Header.css";
 
 const Header = () => {
   const [user, setUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const getUser = async () => {
+    const fetchUser = async () => {
       const { data, error } = await supabase.auth.getUser();
       if (!error && data?.user) setUser(data.user);
     };
-    getUser();
+    fetchUser();
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user || null);
     });
 
-    return () => listener.subscription.unsubscribe();
+    return () => authListener.subscription.unsubscribe();
   }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    navigate("/");
   };
 
+  const handleSmoothScroll = (e, targetId) => {
+    e.preventDefault();
+    const section = document.getElementById(targetId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      setMenuOpen(false);
+    }
+  };
+
+
+
   return (
-    <header className="header">
-      <div className="nav-container">
-        {/* Logo */}
-        <div className="logo">
-          <Link to="/">
-            <span className="logo-icon">A</span>
-            <span className="logo-text">Amazonnews</span>
+    <header className="landing-header">
+      <nav className="landing-nav">
+        <div className="landing-nav-container">
+          {/* === LOGO === */}
+          <Link
+            className="landing-logo"
+            to="/"
+          >
+            <img className="landing-logo-icon" src={logo_amazonia} alt="Amazonia logo" />
+            <span className="logo-text">
+              Amazon<span className="highlight">News</span>
+            </span>
           </Link>
-        </div>
 
-        {/* Menú principal */}
-        <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <Link to="/" onClick={() => setMenuOpen(false)}>inicio</Link>
-          {/* <Link to="/categories" onClick={() => setMenuOpen(false)}>categorias</Link>
-          <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
-          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link> */}
-
-          {/* Opciones de sesión visibles en móvil */}
-          <div className="mobile-auth">
-            {user ? (
-              <>
-                <span className="username">👋 {user.email.split("@")[0]}</span>
-                <button onClick={handleLogout} className="btn logout">
-                  Cerrar sesión
-                </button>
-              </>
-            ) : (
-              <Link to="/login" className="btn join" onClick={() => setMenuOpen(false)}>
-                Iniciar sesión
-              </Link>
-            )}
+          {/* === NAV LINKS === */}
+          <div className={`landing-nav-links ${menuOpen ? "open" : ""}`}>
+            <a href="#home" onClick={(e) => handleSmoothScroll(e, "home")}>
+              Home
+            </a>
+            <a href="#categories" onClick={(e) => handleSmoothScroll(e, "categories")}>
+              Secciones
+            </a>
+            <a href="#about" onClick={(e) => handleSmoothScroll(e, "about")}>
+              Sobre nosotros
+            </a>
+            <a href="#contact" onClick={(e) => handleSmoothScroll(e, "contact")}>
+              Contáctanos
+            </a>
           </div>
-        </nav>
 
-        {/* Botones desktop */}
-        <div className="nav-buttons">
-          <Link to="/panel-noticias" className="btn explore">
-            explorar noticias
-          </Link>
-
-          {user ? (
-            <>
-              <span className="username">👋 {user.email.split("@")[0]}</span>
-              <button onClick={handleLogout} className="btn logout">
-                Cerrar sesión
-              </button>
-            </>
-          ) : (
-            <Link to="/login" className="btn join">
-              Iniciar sesión
+          {/* === Desktop Buttons === */}
+          <div className="landing-nav-buttons">
+            <Link to="/panel-noticias" className="landing-btn explore">
+              Explora noticias
             </Link>
-          )}
-        </div>
+            <Link to="/login" className="landing-btn join">
+              Únete al equipo
+            </Link>
+          </div>
 
-        {/* Botón menú móvil */}
-        <button
-          className="menu-toggle"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle Menu"
-        >
-          ☰
-        </button>
-      </div>
+          {/* === Menu Toggle === */}
+          <button
+            className={`menu-toggle ${menuOpen ? "active" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle Menu"
+          >
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </button>
+        </div>
+      </nav>
     </header>
   );
 };

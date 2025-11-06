@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Register.css';
 import { supabase } from '../../supabaseClient.js';
 import { Link } from 'react-router-dom';
+import { logo_amazonia } from '../../../config.js';
 
 const Register = () => {
   // Estados para el formulario
