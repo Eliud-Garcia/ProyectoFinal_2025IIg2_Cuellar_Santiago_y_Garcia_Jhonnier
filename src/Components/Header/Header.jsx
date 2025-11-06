@@ -39,10 +39,10 @@ const Header = () => {
 
         {/* Menú principal */}
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to="/categories" onClick={() => setMenuOpen(false)}>Categories</Link>
+          <Link to="/" onClick={() => setMenuOpen(false)}>inicio</Link>
+          {/* <Link to="/categories" onClick={() => setMenuOpen(false)}>categorias</Link>
           <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
-          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link> */}
 
           {/* Opciones de sesión visibles en móvil */}
           <div className="mobile-auth">
@@ -63,8 +63,8 @@ const Header = () => {
 
         {/* Botones desktop */}
         <div className="nav-buttons">
-          <Link to="/explore" className="btn explore">
-            Explore News
+          <Link to="/panel-noticias" className="btn explore">
+            explorar noticias
           </Link>
 
           {user ? (

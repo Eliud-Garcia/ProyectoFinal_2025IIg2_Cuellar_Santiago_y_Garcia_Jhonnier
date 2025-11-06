@@ -19,11 +19,14 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
           <Route path="/" element={<Landing_page />} />
-          <Route path='/dashboard-reportero' element={<Dashboard_reportero />} />
-          <Route path='/dashboard-reportero/mis-noticias' element={<Mis_noticiasR />} />
-          <Route path='/dashboard-reportero/crear-noticia' element={<CrearNoticia />} />
-          <Route path='/dashboard-reportero/perfil' element={<Perfil />} />
+
+          <Route path="/dashboard-reportero" element={<Dashboard_reportero />}>
+            <Route path="crear-noticia" element={<CrearNoticia />} />
+            <Route path="mis-noticias" element={<Mis_noticiasR />} />
+          </Route>
+
         </Routes>
         <Footer />
       </Router>
