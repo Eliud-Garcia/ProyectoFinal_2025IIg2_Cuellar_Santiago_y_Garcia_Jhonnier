@@ -10,6 +10,10 @@ import Perfil from './Pages/Dashboard_reportero/Perfil/Perfil.jsx'
 import CrearNoticia from './Pages/Dashboard_reportero/CrearNoticia/CrearNoticia.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 import Header from './Components/Header/Header.jsx';
+import Noticia from './Components/Noticia/Noticia.jsx';
+import Seccion from './Components/Secciones/Secciones.jsx'
+import PanelNoticia from "./Components/Panel_noticias/Panel_noticias.jsx"
+
 
 const App = () => {
   return (
@@ -20,12 +24,17 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Landing_page />} />
-          <Route path='/dashboard-reportero' element={<Dashboard_reportero />} />
-          <Route path='/dashboard-reportero/mis-noticias' element={<Mis_noticiasR />} />
-          <Route path='/dashboard-reportero/crear-noticia' element={<CrearNoticia />} />
-          <Route path='/dashboard-reportero/perfil' element={<Perfil />} />
+          <Route path='/panel-noticias' element={<PanelNoticia />} />
+          <Route path="/seccion/:nombre" element={<Seccion />} />
+          <Route path="/seccion" element={<Seccion />} />
+          <Route path="/noticia/:id" element={<Noticia />} />
+          <Route path="/noticia" element={<Noticia />} />
+          <Route path="/dashboard_reportero" element={<Dashboard_reportero />} >
+            <Route path='mis-noticias' element={<Mis_noticiasR />} />
+            <Route path='crear-noticia' element={<CrearNoticia />} />
+          </Route>
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </>
   )

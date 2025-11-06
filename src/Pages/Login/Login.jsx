@@ -23,7 +23,7 @@ const Login = () => {
 
     // Ocultar mensajes previos
     setMessage({ type: '', text: '' });
-    console.log(logo_amazonia);
+    //console.log(logo_amazonia);
 
     // Mostrar estado de carga
     setIsLoading(true);
