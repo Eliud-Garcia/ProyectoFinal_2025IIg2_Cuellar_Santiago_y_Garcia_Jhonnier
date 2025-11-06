@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './Components/Login/Login'
-import Register from './Components/Register/Register'
-import Landing_page from './Components/Landing_page/Landing_page'
-import Dashboard_reportero from './Components/Dashboard_reportero/Dashboard_reportero'
-import Mis_noticiasR from './Components/Dashboard_reportero/Mis_noticias/Mis_noticias'
-import Perfil from './Components/Dashboard_reportero/Perfil/Perfil'
-import CreateNewsPage from './Pages/CreateNewsPage/CreateNewsPage.jsx';
+import Login from './Pages/Login/Login.jsx'
+import Register from './Pages/Register/Register.jsx'
+import Landing_page from './Pages/Landing_page/Landing_page.jsx'
+import Dashboard_reportero from './Pages/Dashboard_reportero/Dashboard_reportero.jsx'
+import Mis_noticiasR from './Pages/Dashboard_reportero/Mis_noticias/Mis_noticias.jsx'
+import Perfil from './Pages/Dashboard_reportero/Perfil/Perfil.jsx'
+import CrearNoticia from './Pages/Dashboard_reportero/CrearNoticia/CrearNoticia.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 import Header from './Components/Header/Header.jsx';
 
@@ -21,9 +21,9 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Landing_page />} />
           <Route path='/dashboard-reportero' element={<Dashboard_reportero />} />
-          <Route path='mis-noticias' element={<Mis_noticiasR />} />
-          <Route path='/crear-noticia' element={<CreateNewsPage />} />
-          <Route path='perfil' element={<Perfil />} />
+          <Route path='/dashboard-reportero/mis-noticias' element={<Mis_noticiasR />} />
+          <Route path='/dashboard-reportero/crear-noticia' element={<CrearNoticia />} />
+          <Route path='/dashboard-reportero/perfil' element={<Perfil />} />
         </Routes>
         <Footer />
       </Router>
