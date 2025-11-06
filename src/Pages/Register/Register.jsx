@@ -262,9 +262,8 @@ const Register = () => {
   // Función para manejar el enlace de login
   const handleLoginLink = (e) => {
     e.preventDefault();
-    console.log('Redirigiendo a la página de login...');
-    // Aquí podrías redirigir a la página de login
-    // navigate('/login');
+   
+    navigate('/login');
   };
 
   // Función para manejar los enlaces de términos y privacidad
@@ -294,7 +293,6 @@ const Register = () => {
           {/* Logo */}
           <div className="register-logo-section">
             <Link to="/" className="register-logo">
-              <img className="register-logo-icon" src="/logo_amazo.png"/>
               <span>Amazonnews</span>
             </Link>
           </div>
@@ -526,7 +524,8 @@ const Register = () => {
 
           {/* Enlace de login */}
           <div className="register-login-link">
-            <span>¿Ya tienes cuenta? <a href="#" onClick={handleLoginLink}>Inicia sesión</a></span>
+            <span>¿Ya tienes cuenta? </span>
+            <Link to="/login">Iniciar sesión</Link>
           </div>
         </div>
       </div>
