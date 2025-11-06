@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom'
 import { supabase } from '../../supabaseClient.js';
-import { useNavigate} from 'react-router-dom';
-import {logo_amazonia} from "../../../config.js"
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
@@ -20,48 +19,68 @@ const Login = () => {
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Ocultar mensajes previos
     setMessage({ type: '', text: '' });
-    //console.log(logo_amazonia);
-
-    // Mostrar estado de carga
     setIsLoading(true);
 
-    //login de usuario
+    // login de usuario
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    })
+      email,
+      password,
+    });
+
     if (error) {
-      alert(error.message)
+      alert(error.message);
       setIsLoading(false);
-      return
+      return;
     }
-    alert('Inicio de sesión exitoso')
 
-    navigate('/dashboard_reportero')
+    // Usuario autenticado correctamente
+    const user = data.user;
+    if (!user) {
+      alert("Error: no se pudo obtener el usuario autenticado.");
+      setIsLoading(false);
+      return;
+    }
 
+    // Consultar el rol del usuario desde la tabla Usuario
+    const { data: userData, error: userError } = await supabase
+      .from("Usuario")
+      .select("rol")
+      .eq("id_user_autenticacion", user.id)
+      .single();
+
+    if (userError || !userData) {
+      console.error("Error al obtener datos del usuario:", userError?.message);
+      alert("No se pudo obtener la información del usuario.");
+      setIsLoading(false);
+      return;
+    }
+
+    const userRole = userData.rol?.toLowerCase();
+    alert(`Inicio de sesión exitoso (${userRole})`);
+
+    // 🔀 Redirigir según el rol
+    if (userRole === "reporter") {
+      navigate("/dashboard-reportero");
+    } else if (userRole === "editor") {
+      navigate("/dashboard-editor");
+    } else {
+      alert("Rol no reconocido. Contacta al administrador.");
+    }
+
+    setIsLoading(false);
   };
 
-  // Función para alternar visibilidad de contraseña
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  // // Función para alternar visibilidad de contraseña
+  // const togglePasswordVisibility = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
   // Función para manejar el enlace de "Olvidé mi contraseña"
   const handleForgotPassword = (e) => {
     e.preventDefault();
     console.log('Abriendo modal de recuperación de contraseña...');
     // Aquí podrías abrir un modal o redirigir
-  };
-
-  // Función para manejar el enlace de registro
-  const handleSignup = (e) => {
-    e.preventDefault();
-    console.log('Redirigiendo a la página de registro...');
-    // Aquí podrías redirigir a la página de registro
-    // navigate('/register');
   };
 
   // Auto-focus en el campo de email al cargar el componente
@@ -71,6 +90,7 @@ const Login = () => {
       emailInput.focus();
     }
   }, []);
+
 
   return (
     <div className="">
@@ -82,8 +102,8 @@ const Login = () => {
           {/* Logo */}
           <div className="login-logo-section">
             <Link to="/" className="login-logo">
-              <img className="login-logo-icon" src={logo_amazonia}/>
-              <span>NewsPortal</span>
+              {/* <img className="login-logo-icon" src="" /> */}
+              <span>Amazonnews</span>
             </Link>
           </div>
 

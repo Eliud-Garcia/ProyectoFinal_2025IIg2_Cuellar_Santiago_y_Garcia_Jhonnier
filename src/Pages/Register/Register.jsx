@@ -294,8 +294,8 @@ const Register = () => {
           {/* Logo */}
           <div className="register-logo-section">
             <Link to="/" className="register-logo">
-              <img className="register-logo-icon" src={logo_amazonia}/>
-              <span>NewsPortal</span>
+              <img className="register-logo-icon" src="/logo_amazo.png"/>
+              <span>Amazonnews</span>
             </Link>
           </div>
 

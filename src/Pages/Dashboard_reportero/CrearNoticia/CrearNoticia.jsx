@@ -214,16 +214,6 @@ const CrearNoticia = () => {
         <div className="create-news-form">
           <h1>Crear Nueva Noticia</h1>
 
-          <div className="current-link">
-            <Link
-              to="/dashboard-reportero"
-            >
-              Dashboard Reportero /
-            </Link>
-
-            <p className="breadcrumb">Crear Nueva</p>
-          </div>
-
           <label>Título *</label>
           <input
             type="text"
