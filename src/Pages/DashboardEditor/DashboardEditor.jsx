@@ -19,7 +19,7 @@ const DashboardEditor = () => {
   
     if (checkingAuth) return <div>Cargando...</div>;
     if( accessDenied ) return <AccessDenied />;
-    if (userData && (userData.rol !== "reporter")) return <AccessDenied />;
+    if (userData && (userData.rol !== "editor")) return <AccessDenied />;
 
   return (
     <div className={`dashboard-container ${menuOpen ? "menu-open" : ""}`}>

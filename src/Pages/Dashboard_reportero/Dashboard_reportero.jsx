@@ -37,7 +37,10 @@ const Dashboard_reportero = () => {
       {/* Sidebar */}
       <aside className={`reporter-sidebar ${sidebarOpen ? "open" : ""}`}>
         <h2 className="reporter-logo">
-          <span className="reporter-logo-icon">📰</span> Reporter Hub
+          <span className="reporter-logo-icon">
+            📰 Panel del reportero
+
+          </span>
         </h2>
 
         <nav className="reporter-menu">
@@ -73,7 +76,7 @@ const Dashboard_reportero = () => {
       {/* Contenido principal */}
       <main className="reporter-content">
         <div className="reporter-content-header">
-          <h1>Panel del Reportero</h1>
+          <h1>Bienvend@ {userData.nombre_completo}</h1>
           {/* Puedes añadir más elementos al encabezado si lo deseas */}
         </div>
         <div className="reporter-content-body">

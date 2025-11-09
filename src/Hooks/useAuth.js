@@ -66,7 +66,7 @@ export const useAuth = (requiredRole = null) => {
     try {
       const { data, error } = await supabase
         .from("Usuario")
-        .select("id_usuario, rol") // Agrega más campos si necesitas
+        .select("id_usuario, rol, nombre_completo")
         .eq("id_user_autenticacion", authId)
         .single();
       if (error) throw error;
