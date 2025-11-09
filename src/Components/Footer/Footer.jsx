@@ -1,5 +1,8 @@
 import React from 'react'
 import './Footer.css'
+import '../SocialMedia/SocialMedias'
+import SocialMedias from '../SocialMedia/SocialMedias'
+
 const Footer = () => {
     return (
         <footer className="landing-footer">
@@ -8,17 +11,10 @@ const Footer = () => {
                     <h3>Amazonews</h3>
                     <p>La plataforma oficial de noticias de la Universidad de la Amazonia, que conecta a nuestra comunidad académica a través de historias que importan.</p>
                     <div className="landing-social-icons">
-                        <a href="#" className="landing-social-icon" target="_blank" rel="noopener noreferrer">
-                            f
-                        </a>
-                        <a href="#" className="landing-social-icon" target="_blank" rel="noopener noreferrer">
-                            📷
-                        </a>
-                        <a href="#" className="landing-social-icon" target="_blank" rel="noopener noreferrer">
-                            ▶
-                        </a>
+                        <SocialMedias color={"#94A3B8"}/>
                     </div>
                 </div>
+
                 <div className="landing-footer-section">
                     <h3>Accesos directos</h3>
                     <p><a href="#about">Sobre nosotros</a></p>

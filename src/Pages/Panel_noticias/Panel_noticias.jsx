@@ -205,18 +205,16 @@ const Panel_noticias = () => {
           <div className="widget">
             <h3 className="titulo-widget">Tendencias</h3>
             {noticiasTendencia.length > 0 ? (
-              noticiasTendencia.map((noticia, indice) => (
-                <div key={noticia.id_noticia || noticia.id || indice} className="item-tendencia">
-                  <div
-                    className="numero-tendencia"
-                  // style={{ background: obtenerGradienteCategoria(noticia.categoria, indice) }}
-                  >
-                    {indice + 1}
-                  </div>
+              noticiasTendencia.map((noticia) => (
+                <div key={noticia.id_noticia} className="item-tendencia"
+                  onClick={()=>{
+                    navigate(`/noticia/${noticia.id_noticia}`)
+                  }}
+                >
                   <div className="contenido-tendencia">
                     <h4 className="titulo-tendencia">{noticia.titulo || 'Sin título'}</h4>
                     <p className="meta-tendencia">
-                      {calcularTiempoRelativo(noticia.fecha_creacion)} • {noticia.nombre || 'General'}
+                      {calcularTiempoRelativo(noticia.created_at)} • {noticia.Seccion.nombre || 'General'}
                     </p>
                   </div>
                 </div>

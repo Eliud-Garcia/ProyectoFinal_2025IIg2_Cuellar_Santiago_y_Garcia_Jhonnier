@@ -27,7 +27,7 @@
   width: 50px;
   height: 50px;
   border: 4px solid #e2e8f0;
-  border-top: 4px solid #667eea;
+  border-top: 4px solid #1aae9f;
   border-radius: 50%;
   animation: girar 1s linear infinite;
 }
@@ -60,11 +60,11 @@
 }
 
 .input-busqueda:focus {
-  border-color: #667eea;
+  border-color: #1aae9f;
 }
 
 .boton-buscar {
-  background: #667eea;
+  background: #1aae9f;
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
@@ -110,7 +110,7 @@
   left: 0;
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #1aae9f, #C4F1BE);
   border-radius: 2px;
 }
 
@@ -234,7 +234,7 @@
   left: 0;
   width: 40px;
   height: 2px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #1aae9f, #C4F1BE);
   border-radius: 1px;
 }
 
@@ -389,7 +389,7 @@
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #667eea;
+  color: #1aae9f;
 }
 
 .seccion-pie ul {
@@ -409,7 +409,7 @@
 }
 
 .lista-pie li a:hover {
-  color: #667eea;
+  color: #1aae9f;
 }
 
 .iconos-sociales {
@@ -421,7 +421,7 @@
 .icono-social {
   width: 40px;
   height: 40px;
-  background: #667eea;
+  background: #1aae9f;
   color: white;
   border-radius: 8px;
   display: flex;

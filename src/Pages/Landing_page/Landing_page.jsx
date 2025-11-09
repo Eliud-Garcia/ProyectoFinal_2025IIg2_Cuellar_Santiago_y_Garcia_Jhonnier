@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { supabase } from '../../supabaseClient.js'
 import {logo_amazonia} from "../../../config.js"
 
+
 const Landing_page = () => {
   // Estados para el formulario de contacto
   const [formData, setFormData] = useState({
@@ -80,20 +81,19 @@ const Landing_page = () => {
           <h1>Bienvenido a las noticias de la Universidad de la Amazonia</h1>
           <p>Descubre ideas, eventos, noticias y muchos mas ...</p>
           <div className="landing-hero-buttons">
-            <a
-              href="#categories"
+            <Link
+              to="/panel-noticias"
               className="landing-btn-primary"
-              onClick={(e) => handleSmoothScroll(e, 'categories')}
+              // onClick={(e) => handleSmoothScroll(e, 'categories')}
             >
               Lee las noticias mas recientes
-            </a>
-            <a
-              href="#contact"
+            </Link>
+            <Link
+              to="/panel-noticias"
               className="landing-btn-secondary"
-              onClick={(e) => handleSmoothScroll(e, 'contact')}
             >
               Quiero contar una historia
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -105,12 +105,11 @@ const Landing_page = () => {
           <div className="landing-categories-grid">
             {
               secciones.map(seccion => {
-                { console.log(seccion); }
                 return (
-                  <div className="landing-category-item">
+                  <Link to={`/seccion/${seccion.nombre_id}`} className="landing-category-item">
                     <h3>{seccion.nombre}</h3>
                     <p>{seccion.descripcion}</p>
-                  </div>
+                  </Link>
                 );
               })
 
@@ -124,7 +123,7 @@ const Landing_page = () => {
         <div className="landing-banner-container">
           <div className="landing-banner-tag">La red de noticias de la universidad de la Amazonia</div>
           <h2>Lee la mas exclusiva y recientes noticas de la Universidad de la Amazonia, quedate al tanto del todo.</h2>
-          <a href="#" className="landing-btn-banner">Leer noticias</a>
+          <Link to="/panel-noticias" className="landing-btn-banner">Leer noticias</Link>
         </div>
       </section>
 
@@ -137,57 +136,57 @@ const Landing_page = () => {
             <div className="landing-topic-group">
               <h3>Investigaciones</h3>
               <div className="landing-topic-links">
-                <a href="#" className="landing-topic-link">
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Nuevas</span> Investigaciones
-                </a>
-                <a href="#" className="landing-topic-link">
+                </Link>
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Mejores</span> Revistas
-                </a>
-                <a href="#" className="landing-topic-link">
+                </Link>
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Innovaciones</span> Tecnologicas
-                </a>
+                </Link>
               </div>
             </div>
             <div className="landing-topic-group">
               <h3>Bienestar Universitario</h3>
               <div className="landing-topic-links">
-                <a href="#" className="landing-topic-link">
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Eventos</span> Deportivos
-                </a>
-                <a href="#" className="landing-topic-link">
+                </Link>
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Sesiones</span> de salud
-                </a>
-                <a href="#" className="landing-topic-link">
+                </Link>
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Grupos</span> deportivos
-                </a>
+                </Link>
               </div>
             </div>
             <div className="landing-topic-group">
               <h3>Politicas institucionales</h3>
               <div className="landing-topic-links">
-                <a href="#" className="landing-topic-link">
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Decisiones</span> oficiales del Rector
-                </a>
-                <a href="#" className="landing-topic-link">
+                </Link>
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Actualizacion</span> de Politicas
-                </a>
-                <a href="#" className="landing-topic-link">
+                </Link>
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Nuevos</span> Acuerdos
-                </a>
+                </Link>
               </div>
             </div>
             <div className="landing-topic-group">
               <h3>Encuentros culturales</h3>
               <div className="landing-topic-links">
-                <a href="#" className="landing-topic-link">
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Noches</span> de cine
-                </a>
-                <a href="#" className="landing-topic-link">
+                </Link>
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Rumba</span> Terapia
-                </a>
-                <a href="#" className="landing-topic-link">
+                </Link>
+                <Link to="/panel-noticias" className="landing-topic-link">
                   <span className="landing-topic-tag">Integracion</span> comunal
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -199,13 +198,12 @@ const Landing_page = () => {
         <div className="landing-promo-container">
           <h2>Unete a nuestro equipo de noticias y haz parte de las historias</h2>
           <p>Contribuye haciendo tus propias noticias y comparte ideas con la comunidad</p>
-          <a
-            href="#contact"
+          <Link
+            to="/login"
             className="landing-btn-promo"
-            onClick={(e) => handleSmoothScroll(e, 'contact')}
           >
             El reportero soy yo!
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -263,8 +261,9 @@ const Landing_page = () => {
               type="submit"
               className="landing-btn-primary"
               disabled={isSubmitting || submitStatus === 'success'}
+              
             >
-              {isSubmitting ? 'Sending...' : submitStatus === 'success' ? 'Message Sent!' : 'Enviar Mensaje'}
+              {isSubmitting ? 'Sending...' : submitStatus === 'success' ? 'Mensaje enviado!' : 'Enviar Mensaje'}
             </button>
           </form>
         </div>

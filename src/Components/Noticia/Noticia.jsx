@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../../supabaseClient.js';
 import './Noticia.css';
+import SocialMedias from '../SocialMedia/SocialMedias.jsx';
 
 const Noticia = () => {
   // Obtener parámetros de la URL
@@ -21,22 +22,6 @@ const Noticia = () => {
 
   // Referencias para la tabla de contenidos
   const seccionesRef = useRef([]);
-
-  // Categorías con información
-  const categorias = {
-    'Tecnología': { icono: '💻', gradiente: 'linear-gradient(135deg, #667eea, #764ba2)' },
-    'Deportes': { icono: '⚽', gradiente: 'linear-gradient(135deg, #4CAF50, #81C784)' },
-    'Política': { icono: '🏛️', gradiente: 'linear-gradient(135deg, #FF9800, #FFB74D)' },
-    'Cultura': { icono: '🎭', gradiente: 'linear-gradient(135deg, #f44336, #EF5350)' },
-    'Negocios': { icono: '💼', gradiente: 'linear-gradient(135deg, #9C27B0, #BA68C8)' },
-    'Ciencia': { icono: '🔬', gradiente: 'linear-gradient(135deg, #00BCD4, #4DD0E1)' }
-  };
-
-  // Obtener información de la categoría
-  const obtenerInfoCategoria = (categoria) => {
-    return categorias[categoria] || categorias['Tecnología'];
-  };
-
   // Función para formatear fecha
   const formatearFecha = (fecha) => {
     if (!fecha) return 'Fecha no disponible';
@@ -260,12 +245,16 @@ const Noticia = () => {
     }
   };
 
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser(); // devuelve { user }
+    return data?.user ?? null;
+  };
+
 
   // Manejar enviar comentario
   const manejarEnviarComentario = async (e) => {
     e.preventDefault();
     if (!comentarioTexto.trim()) return;
-
     const { data, error } = await supabase
       .from("Comentario")
       .insert([
@@ -327,9 +316,6 @@ const Noticia = () => {
       </div>
     );
   }
-
-  const infoCategoria = obtenerInfoCategoria(noticia.categoria);
-
   return (
     <div className="noticia">
       {/* Barra de progreso */}
@@ -338,66 +324,14 @@ const Noticia = () => {
         style={{ width: `${progresoLectura}%` }}
       ></div>
 
-      {/* Navegación */}
-      <nav className="barra-navegacion">
-        <div className="contenedor-navegacion">
-          <Link to="/" className="logo">
-            <div className="logo-icono">N</div>
-            <span>NewsPortal</span>
-          </Link>
-          <ul className="menu-navegacion">
-            <li><Link to="/">Inicio</Link></li>
-            <li><Link to="/noticias">Noticias</Link></li>
-            <li><Link to={`/secciones/${noticia.categoria}`}>{noticia.categoria}</Link></li>
-            <li><Link to="/contacto">Contacto</Link></li>
-          </ul>
-          <button className="boton-menu-movil">☰</button>
-        </div>
-      </nav>
-
       {/* Botones de compartir */}
       <div className="botones-compartir">
-        <button
-          className="boton-compartir facebook"
-          onClick={() => manejarCompartir('facebook')}
-          title="Compartir en Facebook"
-        >
-          f
-        </button>
-        <button
-          className="boton-compartir twitter"
-          onClick={() => manejarCompartir('twitter')}
-          title="Compartir en Twitter"
-        >
-          🐦
-        </button>
-        <button
-          className="boton-compartir linkedin"
-          onClick={() => manejarCompartir('linkedin')}
-          title="Compartir en LinkedIn"
-        >
-          in
-        </button>
-        <button
-          className="boton-compartir whatsapp"
-          onClick={() => manejarCompartir('whatsapp')}
-          title="Compartir en WhatsApp"
-        >
-          📱
-        </button>
-        <button
-          className="boton-compartir email"
-          onClick={() => manejarCompartir('email')}
-          title="Enviar por email"
-        >
-          📧
-        </button>
+        <SocialMedias posicion="column" />
       </div>
 
       {/* Sección Hero */}
       <section
         className="seccion-hero-noticia"
-        style={{ background: infoCategoria.gradiente }}
       >
         <div className="imagen-hero-noticia">
           {noticia.image_url ? (
@@ -430,7 +364,6 @@ const Noticia = () => {
             <div className="info-autor">
               <div
                 className="avatar-autor"
-                style={{ background: infoCategoria.gradiente }}
               >
                 {obtenerInicialesAutor(noticia.id_usuario_creador.nombre_completo || 'Anónimo')}
               </div>
@@ -462,7 +395,6 @@ const Noticia = () => {
             <div className="header-biografia">
               <div
                 className="avatar-biografia"
-                style={{ background: infoCategoria.gradiente }}
               >
                 {obtenerInicialesAutor(noticia.id_usuario_creador.nombre_completo || 'Anónimo')}
               </div>
@@ -479,56 +411,6 @@ const Noticia = () => {
               <a href="#" className="icono-social" target="_blank" rel="noopener noreferrer">📧</a>
             </div>
           </div>
-
-          {/* Artículos Relacionados */}
-          {noticiasRelacionadas.length > 0 && (
-            <section className="articulos-relacionados">
-              <h2 className="titulo-relacionados">Artículos Relacionados</h2>
-              <div className="grid-relacionados">
-                {noticiasRelacionadas.map((relacionada, indice) => {
-                  const gradientes = [
-                    'linear-gradient(135deg, #667eea, #764ba2)',
-                    'linear-gradient(135deg, #4CAF50, #81C784)',
-                    'linear-gradient(135deg, #FF9800, #FFB74D)'
-                  ];
-                  const gradiente = gradientes[indice % gradientes.length];
-
-                  return (
-                    <article
-                      key={relacionada.id_noticia || relacionada.id || indice}
-                      className="tarjeta-relacionada"
-                      onClick={() => navigate(`/noticia/${relacionada.id_noticia || relacionada.id}`)}
-                    >
-                      <div
-                        className="imagen-relacionada"
-                        style={{ background: gradiente }}
-                      >
-                        {relacionada.imagen_principal ? (
-                          <img
-                            src={relacionada.imagen_principal}
-                            alt={relacionada.titulo}
-                            className="imagen-relacionada-real"
-                          />
-                        ) : (
-                          <span className="emoji-relacionada">{infoCategoria.icono}</span>
-                        )}
-                      </div>
-                      <div className="contenido-relacionada">
-                        <h3 className="titulo-relacionada">{relacionada.titulo || 'Sin título'}</h3>
-                        <p className="extracto-relacionada">
-                          {relacionada.extracto || relacionada.contenido?.substring(0, 100) || 'Sin descripción'}
-                        </p>
-                        <div className="meta-relacionada">
-                          <span>{relacionada.nombre_autor || 'Anónimo'}</span>
-                          <span>{calcularTiempoLectura(relacionada.contenido)}</span>
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
-          )}
 
           {/* Sección de Comentarios */}
           <section className="seccion-comentarios">
@@ -555,7 +437,6 @@ const Noticia = () => {
                   <div className="header-comentario">
                     <div
                       className="avatar-comentario"
-                      style={{ background: infoCategoria.gradiente }}
                     >
                       {comentario.iniciales || "RB"}
                     </div>
@@ -591,52 +472,6 @@ const Noticia = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
-
-          {/* Más de la Sección */}
-          {noticiasSeccion.length > 0 && (
-            <div className="widget-lateral">
-              <h3 className="titulo-widget">Más de {noticia.categoria}</h3>
-              <div className="mas-articulos">
-                {noticiasSeccion.map((art, indice) => {
-                  const gradientes = [
-                    'linear-gradient(135deg, #667eea, #764ba2)',
-                    'linear-gradient(135deg, #4CAF50, #81C784)',
-                    'linear-gradient(135deg, #FF9800, #FFB74D)'
-                  ];
-                  const gradiente = gradientes[indice % gradientes.length];
-
-                  return (
-                    <div
-                      key={art.id_noticia || art.id || indice}
-                      className="articulo-mini"
-                      onClick={() => navigate(`/noticia/${art.id_noticia || art.id}`)}
-                    >
-                      <div
-                        className="miniatura-articulo"
-                        style={{ background: gradiente }}
-                      >
-                        {art.imagen_principal ? (
-                          <img
-                            src={art.imagen_principal}
-                            alt={art.titulo}
-                            className="miniatura-imagen"
-                          />
-                        ) : (
-                          <span className="emoji-miniatura">{infoCategoria.icono}</span>
-                        )}
-                      </div>
-                      <div className="contenido-mini">
-                        <h4 className="titulo-mini">{art.titulo || 'Sin título'}</h4>
-                        <p className="meta-mini">
-                          {calcularTiempoRelativo(art.fecha_creacion)} • {calcularTiempoLectura(art.contenido)}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
             </div>
           )}
 
