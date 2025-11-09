@@ -1,0 +1,55 @@
+.socials {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.socials .icon {
+    display: inline-flex;
+    width: 60px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    /* color negro */
+    text-decoration: none;
+    transition: transform .12s ease, opacity .12s ease;
+    opacity: 0.95;
+    font-size: 2rem;
+}
+
+.socials .icon:hover,
+.socials .icon:focus {
+    transform: translateY(-3px);
+    opacity: 1;
+}
+
+.github-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    /* negro */
+    text-decoration: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    opacity: 0.9;
+}
+
+.github-icon:hover {
+    transform: translateY(-3px);
+    opacity: 1;
+}
+
+@media (max-width: 420px) {
+    .socials .icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .socials svg {
+        width: 30px;
+        height: 30px;
+    }
+}

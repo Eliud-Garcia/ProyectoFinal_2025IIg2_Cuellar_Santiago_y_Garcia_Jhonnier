@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import { logo_amazonia } from "../../../config";
 import "./Header.css";
@@ -9,6 +9,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,14 +31,32 @@ const Header = () => {
     navigate("/");
   };
 
+
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
+
+    if (location.pathname !== "/") {
+      sessionStorage.setItem("scrollTarget", targetId);
+      navigate("/");
+    } else {
+      scrollToSection(targetId);
+    }
+  };
+
+  const scrollToSection = (targetId) => {
     const section = document.getElementById(targetId);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
-      setMenuOpen(false);
     }
   };
+
+  useEffect(() => {
+    const targetId = sessionStorage.getItem("scrollTarget");
+    if (targetId && location.pathname === "/") {
+      scrollToSection(targetId);
+      sessionStorage.removeItem("scrollTarget");
+    }
+  }, [location.pathname]);
 
 
 

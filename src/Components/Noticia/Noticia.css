@@ -28,7 +28,7 @@
   width: 50px;
   height: 50px;
   border: 4px solid #e2e8f0;
-  border-top: 4px solid #667eea;
+  border-top: 4px solid #1aae9f;
   border-radius: 50%;
   animation: girar 1s linear infinite;
 }
@@ -51,7 +51,7 @@
 }
 
 .boton-volver {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #1aae9f,#1aae9f);
   color: white;
   padding: 0.8rem 2rem;
   border-radius: 8px;
@@ -71,7 +71,7 @@
   top: 70px;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #1aae9f, #C4F1BE);
   z-index: 1000;
   transition: width 0.1s ease;
 }
@@ -99,7 +99,7 @@
 .logo {
   font-size: 1.8rem;
   font-weight: 800;
-  color: #667eea;
+  color: #1aae9f;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -109,7 +109,7 @@
 .logo-icono {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #1aae9f, #C4F1BE);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -138,7 +138,7 @@
 }
 
 .menu-navegacion a:hover {
-  color: #667eea;
+  color: #1aae9f;
 }
 
 .menu-navegacion a::after {
@@ -148,7 +148,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #1aae9f, #C4F1BE);
   transition: width 0.3s ease;
 }
 
@@ -210,7 +210,7 @@
 }
 
 .boton-compartir.email {
-  background: #667eea;
+  background: #1aae9f;
 }
 
 .boton-compartir:hover {
@@ -344,6 +344,7 @@
   color: white;
   font-weight: 700;
   font-size: 1.5rem;
+  background-color: #1aae9f;
 }
 
 .detalles-autor h3 {
@@ -397,9 +398,9 @@
 
 .boton-accion:hover,
 .boton-accion.guardado {
-  background: #667eea;
+  background: #1aae9f;
   color: white;
-  border-color: #667eea;
+  border-color: #1aae9f;
   transform: translateY(-1px);
 }
 
@@ -427,7 +428,7 @@
   left: 0;
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #1aae9f, #C4F1BE);
   border-radius: 2px;
 }
 
@@ -446,7 +447,7 @@
 
 .cuerpo-articulo blockquote {
   background: #f7fafc;
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #1aae9f;
   padding: 1.5rem 2rem;
   margin: 2rem 0;
   font-style: italic;
@@ -498,6 +499,7 @@
   color: white;
   font-weight: 700;
   font-size: 2rem;
+  background-color: #1aae9f;
 }
 
 .info-biografia h3 {
@@ -527,7 +529,7 @@
 .icono-social {
   width: 40px;
   height: 40px;
-  background: #667eea;
+  background: #1aae9f;
   color: white;
   border-radius: 8px;
   display: flex;
@@ -564,7 +566,7 @@
   left: 0;
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #1aae9f, #C4F1BE);
   border-radius: 2px;
 }
 
@@ -677,11 +679,11 @@
 }
 
 .textarea-comentario:focus {
-  border-color: #667eea;
+  border-color: #1aae9f;
 }
 
 .boton-enviar-comentario {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #1aae9f, #C4F1BE);
   color: white;
   border: none;
   padding: 0.8rem 2rem;
@@ -733,6 +735,7 @@
   color: white;
   font-weight: 600;
   font-size: 0.9rem;
+  background-color: #1aae9f;
 }
 
 .info-comentario h4 {
@@ -772,7 +775,7 @@
 
 .boton-like:hover,
 .boton-responder:hover {
-  color: #667eea;
+  color: #1aae9f;
 }
 
 
@@ -801,7 +804,7 @@
   left: 0;
   width: 40px;
   height: 3px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #1aae9f, #C4F1BE);
   border-radius: 2px;
 }
 
@@ -837,8 +840,8 @@
 }
 
 .enlace-toc:hover {
-  color: #667eea;
-  border-left-color: #667eea;
+  color: #1aae9f;
+  border-left-color: #1aae9f;
   background: #f7fafc;
   margin-left: -1.5rem;
   padding-left: 2.5rem;
@@ -937,11 +940,11 @@
 }
 
 .input-newsletter:focus {
-  border-color: #667eea;
+  border-color: #1aae9f;
 }
 
 .boton-newsletter {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #1aae9f, #C4F1BE) !important;
   color: white;
   border: none;
   padding: 0.8rem;
