@@ -8,6 +8,9 @@ import Landing_page from './Pages/Landing_page/Landing_page.jsx'
 import Header from './Components/Header/Header.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 
+//proteccion rutas
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
+
 //reportero
 import Dashboard_reportero from './Pages/Dashboard_reportero/Dashboard_reportero.jsx'
 import Mis_noticiasR from './Pages/Dashboard_reportero/Mis_noticias/Mis_noticias.jsx'
@@ -34,15 +37,23 @@ const App = () => {
           <Route path='/panel-noticias' element={<PanelNoticia />} />
           <Route path="/seccion/:nombre" element={<Seccion />} />
           <Route path="/noticia/:id" element={<Noticia />} />
-          <Route path="/dashboard-reportero" element={<Dashboard_reportero />}>
-            <Route path="crear-noticia" element={<CrearNoticia />} />
-            <Route path="mis-noticias" element={<Mis_noticiasR />} />
+
+
+          {/* Rutas protegidas para reportero */}
+          <Route element={<ProtectedRoute requiredRole="reporter" />}>
+            <Route path="/dashboard-reportero" element={<Dashboard_reportero />}>
+              <Route path="crear-noticia" element={<CrearNoticia />} />
+              <Route path="mis-noticias" element={<Mis_noticiasR />} />
+            </Route>
           </Route>
 
-          <Route path="/dashboard-editor" element={<DashboardEditor />}>
-            <Route path="listado-noticias" element={<GestionarNoticias />} />
-            <Route path="listado-secciones" element={<GestionarSecciones />} />
-            <Route path="editar/:id" element={<EditarSeccion />} />
+          {/* Rutas protegidas para editor */}
+          <Route element={<ProtectedRoute requiredRole="editor" />}>
+            <Route path="/dashboard-editor" element={<DashboardEditor />}>
+              <Route path="listado-noticias" element={<GestionarNoticias />} />
+              <Route path="listado-secciones" element={<GestionarSecciones />} />
+              <Route path="editar/:id" element={<EditarSeccion />} />
+            </Route>
           </Route>
 
         </Routes>
