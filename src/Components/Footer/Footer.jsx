@@ -1,5 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import SocialMedias from "../SocialMedia/SocialMedias";
 
 const Footer = () => {
   return (
@@ -14,30 +15,7 @@ const Footer = () => {
               que conecta a nuestra comunidad académica a través de historias que importan.
             </p>
             <div className="d-flex gap-3 mt-3">
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-light fs-5"
-              >
-                f
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-light fs-5"
-              >
-                📷
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-light fs-5"
-              >
-                ▶
-              </a>
+              <SocialMedias color="white" size="30"/>
             </div>
           </div>
 
