@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient.js";
 import "./DashboardEditor.css";
+import AccessDenied from "../../Components/AccessDenied/AccessDenied.jsx";
+import { useAuth } from '../../Hooks/useAuth.js';
 
 const DashboardEditor = () => {
   const navigate = useNavigate();
@@ -12,12 +14,20 @@ const DashboardEditor = () => {
     navigate("/");
   };
 
+  //pa validar que sea del rol editor
+    const { userData, checkingAuth, accessDenied } = useAuth('editor');
+  
+    if (checkingAuth) return <div>Cargando...</div>;
+    if( accessDenied ) return <AccessDenied />;
+    if (userData && (userData.rol !== "reporter")) return <AccessDenied />;
+
   return (
     <div className={`dashboard-container ${menuOpen ? "menu-open" : ""}`}>
       {/* Header para móvil */}
       <header className="dashboard-header">
         <div className="logo">
           📰 <span>Amazon</span>News
+          
         </div>
         <button
           className="menu-toggle"

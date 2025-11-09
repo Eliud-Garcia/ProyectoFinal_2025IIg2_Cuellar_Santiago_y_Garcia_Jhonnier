@@ -1,104 +1,184 @@
-.dashboard-page {
+/* Paleta de Colores Modernos */
+:root {
+  --reporter-color-primary: #1e8449;
+  /* Verde oscuro para énfasis */
+  --reporter-color-secondary: #2ecc71;
+  /* Verde más claro para hover/active */
+  --reporter-color-background: #f7f9fc;
+  /* Blanco/gris muy claro */
+  --reporter-color-text: #2c3e50;
+  /* Gris oscuro para texto */
+  --reporter-color-white: #ffffff;
+}
+
+/* Estructura Principal */
+.reporter-dashboard-page {
   display: flex;
   min-height: 100vh;
-  background-color: #f5f6fa;
-  font-family: "Inter", sans-serif;
+  background-color: var(--reporter-color-background);
 }
 
-/* ---------- SIDEBAR ---------- */
-.sidebar {
+/* --- Sidebar --- */
+.reporter-sidebar {
   width: 250px;
-  background-color: #1e293b; /* Azul oscuro */
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem 0;
+  background-color: var(--reporter-color-white);
+  color: var(--reporter-color-text);
+  padding: 20px 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  flex-shrink: 0;
 }
 
-.logo {
-  font-size: 1.3rem;
+.reporter-logo {
+  font-size: 1.8rem;
   font-weight: 700;
-  text-align: center;
-  margin-bottom: 2rem;
+  color: var(--reporter-color-primary);
+  margin: 0 20px 30px;
+  display: flex;
+  align-items: center;
 }
 
-/* ---------- MENU ---------- */
-.menu {
+.reporter-logo-icon {
+  margin-right: 10px;
+}
+
+.reporter-menu {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
 }
 
-.menu-item {
+.reporter-menu-item {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  color: #cbd5e1;
+  padding: 15px 20px;
   text-decoration: none;
-  padding: 0.75rem 1.5rem;
-  transition: all 0.3s;
-  border-left: 4px solid transparent;
-}
-
-.menu-item:hover {
-  background-color: #334155;
-  color: #fff;
-}
-
-.menu-item.active {
-  background-color: #475569;
-  border-left: 4px solid #6366f1;
-  color: #fff;
-}
-
-.icon {
-  font-size: 20px;
-}
-
-/* ---------- LOGOUT ---------- */
-.logout {
+  color: var(--reporter-color-text);
+  font-size: 1rem;
+  font-weight: 500;
+  border-left: 5px solid transparent;
+  transition: background-color 0.2s, border-left-color 0.2s;
+  cursor: pointer;
   background: none;
   border: none;
-  color: #f87171;
+  width: 100%;
   text-align: left;
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
+}
+
+.reporter-menu-item:hover {
+  background-color: rgba(30, 132, 73, 0.05);
+  /* Sombra muy clara del verde */
+  border-left-color: var(--reporter-color-secondary);
+}
+
+.reporter-menu-item.active {
+  background-color: rgba(30, 132, 73, 0.1);
+  border-left-color: var(--reporter-color-primary);
+  color: var(--reporter-color-primary);
+  font-weight: 600;
+}
+
+.reporter-icon {
+  margin-right: 15px;
+  font-size: 1.2rem;
+}
+
+.reporter-logout {
   margin-top: auto;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  transition: background-color 0.3s;
+  /* Empuja el botón al final de la barra */
+  color: #e74c3c;
+  /* Color rojo para cerrar sesión */
 }
 
-.logout:hover {
-  background-color: #7f1d1d;
+.reporter-logout:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+  border-left-color: #e74c3c;
+  color: #c0392b;
 }
 
-/* ---------- CONTENT ---------- */
-.content {
-  flex: 1;
-  padding: 2rem;
-  background-color: #f9fafb;
+/* --- Contenido Principal --- */
+.reporter-content {
+  flex-grow: 1;
+  padding: 20px;
 }
 
-.logout {
-  background: none;
+.reporter-content-header h1 {
+  color: var(--reporter-color-primary);
+  margin-bottom: 20px;
+}
+
+/* --- Toggle Menú (Solo para Móviles) --- */
+.reporter-menu-toggle {
+  display: none;
+  /* Oculto por defecto en escritorio */
+
+  /* --- CAMBIO CLAVE: position: fixed -> position: absolute (o static) --- */
+  position: absolute;
+
+  top: 15px;
+  left: 15px;
+  z-index: 100;
+  background-color: var(--reporter-color-primary);
+  color: var(--reporter-color-white);
   border: none;
-  color: #f87171;
-  text-align: left;
-  padding: 0.75rem 1.5rem;
+  padding: 10px 15px;
+  border-radius: 5px;
   cursor: pointer;
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  transition: background-color 0.3s;
-  font-size: 0.95rem;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.logout:hover {
-  background-color: #7f1d1d;
+/* --- Media Query para Responsividad (Móviles) --- */
+@media (max-width: 768px) {
+
+  /* ... estilos de la barra lateral ... */
+
+  .reporter-menu-toggle {
+    display: block;
+    /* Visible en móviles */
+  }
+
+  /* --- AJUSTE CLAVE: Eliminar padding-top, ya no es necesario --- */
+  .reporter-content {
+    margin-left: 0;
+    /* Antes: padding-top: 70px; */
+    padding-top: 20px;
+    /* Volver al padding normal */
+  }
+
+  .reporter-dashboard-page {
+    /* Asegura que el contenedor padre para position: absolute esté configurado */
+    position: relative;
+    /* Agregado para que 'absolute' funcione dentro de este contenedor */
+    flex-direction: column;
+  }
 }
 
+/* --- Media Query para Responsividad (Móviles) --- */
+@media (max-width: 768px) {
+  .reporter-sidebar {
+    position: fixed;
+    height: 100%;
+    z-index: 99;
+    transform: translateX(-100%);
+  }
 
+  .reporter-sidebar.open {
+    transform: translateX(0);
+  }
 
+  .reporter-menu-toggle {
+    display: block;
+    /* Visible en móviles */
+  }
+
+  .reporter-content {
+    margin-left: 0;
+    padding-top: 70px;
+    /* Espacio para el botón de menú fijo */
+  }
+
+  .reporter-dashboard-page {
+    /* Asegura que el contenido use todo el ancho */
+    flex-direction: column;
+  }
+}
