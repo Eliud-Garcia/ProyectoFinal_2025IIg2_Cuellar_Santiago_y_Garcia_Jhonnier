@@ -9,7 +9,7 @@ import Header from './Components/Header/Header.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 
 //proteccion rutas
-import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
+import AccessDenied from './Components/AccessDenied/AccessDenied.jsx';
 
 //reportero
 import Dashboard_reportero from './Pages/Dashboard_reportero/Dashboard_reportero.jsx'
@@ -38,23 +38,23 @@ const App = () => {
           <Route path="/seccion/:nombre" element={<Seccion />} />
           <Route path="/noticia/:id" element={<Noticia />} />
 
+          {/* Ruta para acceso denegado */}
+          <Route path="/unauthorized" element={<AccessDenied />} />
+
 
           {/* Rutas protegidas para reportero */}
-          <Route element={<ProtectedRoute requiredRole="reporter" />}>
+
             <Route path="/dashboard-reportero" element={<Dashboard_reportero />}>
               <Route path="crear-noticia" element={<CrearNoticia />} />
               <Route path="mis-noticias" element={<Mis_noticiasR />} />
             </Route>
-          </Route>
 
           {/* Rutas protegidas para editor */}
-          <Route element={<ProtectedRoute requiredRole="editor" />}>
             <Route path="/dashboard-editor" element={<DashboardEditor />}>
               <Route path="listado-noticias" element={<GestionarNoticias />} />
               <Route path="listado-secciones" element={<GestionarSecciones />} />
               <Route path="editar/:id" element={<EditarSeccion />} />
             </Route>
-          </Route>
 
         </Routes>
         <Footer />

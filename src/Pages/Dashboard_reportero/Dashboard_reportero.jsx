@@ -1,51 +1,87 @@
-import React from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import React, { useState, useEffect} from "react";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient.js";
+import { useAuth } from '../../Hooks/useAuth.js';
+import AccessDenied from "../../Components/AccessDenied/AccessDenied.jsx";
 import "./Dashboard_reportero.css";
-import { supabase } from '../../supabaseClient.js';
 
 const Dashboard_reportero = () => {
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setUser(null);
+    navigate("/");
   };
 
+  //pa validar que sea del rol reporter
+  const { userData, checkingAuth, accessDenied } = useAuth('reporter');
+
+  
+  if (checkingAuth) return <div>Cargando...</div>;
+  if( accessDenied ) return <AccessDenied />;
+  if (userData && (userData.rol !== "reporter")) return <AccessDenied />;
+  
+
   return (
-    <div className="dashboard-page">
-      <aside className="sidebar">
-        <h2 className="logo">📰 Dashboard</h2>
+    <div className="reporter-dashboard-page">
+      {/* Botón menú para móviles - Siempre visible en móviles */}
+      <button
+        className="reporter-menu-toggle"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        aria-label={sidebarOpen ? "Cerrar menú" : "Abrir menú"}
+      >
+        <span className="reporter-menu-icon">{sidebarOpen ? "✕" : "☰"}</span>
+      </button>
 
-        <nav className="menu">
+      {/* Sidebar */}
+      <aside className={`reporter-sidebar ${sidebarOpen ? "open" : ""}`}>
+        <h2 className="reporter-logo">
+          <span className="reporter-logo-icon">
+            📰 Panel del reportero
 
+          </span>
+        </h2>
+
+        <nav className="reporter-menu">
           <NavLink
             to="/dashboard-reportero/mis-noticias"
             className={({ isActive }) =>
-              `menu-item ${isActive ? "active" : ""}`
+              `reporter-menu-item ${isActive ? "active" : ""}`
             }
+            onClick={() => setSidebarOpen(false)}
           >
-            <span className="icon">📝</span>
+            <span className="reporter-icon">📝</span>
             <span>Mis Noticias</span>
           </NavLink>
 
           <NavLink
             to="/dashboard-reportero/crear-noticia"
             className={({ isActive }) =>
-              `menu-item ${isActive ? "active" : ""}`
+              `reporter-menu-item ${isActive ? "active" : ""}`
             }
+            onClick={() => setSidebarOpen(false)}
           >
-            <span className="icon">➕</span>
+            <span className="reporter-icon">➕</span>
             <span>Crear Noticia</span>
           </NavLink>
 
-          <button className="menu-item logout" onClick={handleLogout}>
-            <span className="icon">🚪</span>
+          <button className="reporter-menu-item reporter-logout" onClick={handleLogout}>
+            <span className="reporter-icon">🚪</span>
             <span>Cerrar Sesión</span>
           </button>
         </nav>
       </aside>
 
-      <main className="content">
-        <Outlet />
+      {/* Contenido principal */}
+      <main className="reporter-content">
+        <div className="reporter-content-header">
+          <h1>Bienvend@ {userData.nombre_completo}</h1>
+          {/* Puedes añadir más elementos al encabezado si lo deseas */}
+        </div>
+        <div className="reporter-content-body">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

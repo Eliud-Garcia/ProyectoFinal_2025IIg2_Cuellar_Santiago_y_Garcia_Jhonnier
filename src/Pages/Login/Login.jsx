@@ -60,9 +60,10 @@ const Login = () => {
     alert(`Inicio de sesión exitoso (${userRole})`);
 
     // 🔀 Redirigir según el rol
-    if (userRole === "reporter") {
+    // Aceptar variantes en inglés/español y comparar en minúsculas
+    if (userRole === "reporter" || userRole === "reportero") {
       navigate("/dashboard-reportero");
-    } else if (userRole === "editor") {
+    } else if (userRole === "editor" || userRole === "editor") {
       navigate("/dashboard-editor");
     } else {
       alert("Rol no reconocido. Contacta al administrador.");

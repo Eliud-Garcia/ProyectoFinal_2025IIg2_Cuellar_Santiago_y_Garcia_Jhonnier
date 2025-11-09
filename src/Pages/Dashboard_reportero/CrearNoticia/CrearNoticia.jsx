@@ -15,10 +15,9 @@ const CrearNoticia = () => {
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userAuth, setUserAuth] = useState(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
+  
   const [categories, setCategories] = useState([]);
   const [userData, setUserData] = useState(null);
-  const [accessDenied, setAccessDenied] = useState(false);
 
 
   useEffect(() => {
@@ -35,21 +34,16 @@ const CrearNoticia = () => {
         return;
       }
 
-      // Obtener datos del usuario desde tu tabla
+      // Obtener datos del usuario 
+      //se obtiene para saber el creador de la noticia
       const currentUserData = await getUser(authUser.id);
       setUserData(currentUserData);
-
-      // Validar rol
-      if (!currentUserData || currentUserData.rol !== "reporter") {
-        console.warn("Acceso denegado: el usuario no es reportero");
-        setAccessDenied(true);
-      }
 
       // Obtener categorías
       const secciones = await fetchCategories();
       setCategories(secciones);
 
-      setCheckingAuth(false);
+    
     };
 
     getUserAndCategories();
@@ -202,10 +196,6 @@ const CrearNoticia = () => {
     setImageFile(null);
     setStatus("editing");
   };
-
-  // 🔹 Renderizado condicional
-  if (checkingAuth) return <p className="loading-text">Verificando sesión...</p>;
-  if (!userAuth || accessDenied) return <AccessDenied />;
 
   return (
     <div className="create-news-container">

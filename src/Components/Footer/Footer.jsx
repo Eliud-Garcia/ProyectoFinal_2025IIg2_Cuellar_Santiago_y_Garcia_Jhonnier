@@ -1,40 +1,91 @@
-import React from 'react'
-import './Footer.css'
-import '../SocialMedia/SocialMedias'
-import SocialMedias from '../SocialMedia/SocialMedias'
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Footer = () => {
-    return (
-        <footer className="landing-footer">
-            <div className="landing-footer-container">
-                <div className="landing-footer-section">
-                    <h3>Amazonews</h3>
-                    <p>La plataforma oficial de noticias de la Universidad de la Amazonia, que conecta a nuestra comunidad académica a través de historias que importan.</p>
-                    <div className="landing-social-icons">
-                        <SocialMedias color={"#94A3B8"}/>
-                    </div>
-                </div>
-
-                <div className="landing-footer-section">
-                    <h3>Accesos directos</h3>
-                    <p><a href="#about">Sobre nosotros</a></p>
-                    <p><a href="#contact" onClick={(e) => handleSmoothScroll(e, 'contact')}>Contactanos</a></p>
-                    <p><a href="#">Politica de privacidad</a></p>
-                    <p><a href="#">Terminos y condiciones</a></p>
-                </div>
-                <div className="landing-footer-section">
-                    <h3>Universidad</h3>
-                    <p>Universidad de la Amazonia</p>
-                    <p>Cl 5b #1179, Florencia, Caquetá, Colombia.</p>
-                    <p>Florencia, Caquetá, Colombia</p>
-                    <p>Phone: +57 3105863364</p>
-                </div>
+  return (
+    <footer className="bg-dark text-light mt-auto pt-5 pb-3">
+      <div className="container">
+        <div className="row gy-4">
+          {/* Columna 1 */}
+          <div className="col-md-4">
+            <h5 className="fw-bold">Amazonews</h5>
+            <p className="small">
+              La plataforma oficial de noticias de la Universidad de la Amazonia,
+              que conecta a nuestra comunidad académica a través de historias que importan.
+            </p>
+            <div className="d-flex gap-3 mt-3">
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-light fs-5"
+              >
+                f
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-light fs-5"
+              >
+                📷
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-light fs-5"
+              >
+                ▶
+              </a>
             </div>
-            <div className="landing-footer-bottom">
-                <p>© 2025 Amazonews – Universidad de la Amazonia</p>
-            </div>
-        </footer>
-    )
-}
+          </div>
 
-export default Footer
+          {/* Columna 2 */}
+          <div className="col-md-4">
+            <h5 className="fw-bold">Accesos directos</h5>
+            <ul className="list-unstyled">
+              <li>
+                <a href="#about" className="text-light text-decoration-none">
+                  Sobre nosotros
+                </a>
+              </li>
+              <li>
+                <a href="#contact" className="text-light text-decoration-none">
+                  Contáctanos
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-light text-decoration-none">
+                  Política de privacidad
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-light text-decoration-none">
+                  Términos y condiciones
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Columna 3 */}
+          <div className="col-md-4">
+            <h5 className="fw-bold">Universidad</h5>
+            <p className="small mb-1">Universidad de la Amazonia</p>
+            <p className="small mb-1">Cl 5b #1179, Florencia, Caquetá, Colombia.</p>
+            <p className="small mb-1">Florencia, Caquetá, Colombia</p>
+            <p className="small mb-0">📞 +57 3105863364</p>
+          </div>
+        </div>
+
+        <hr className="border-secondary my-4" />
+
+        <div className="text-center small">
+          © 2025 <strong>Amazonews</strong> – Universidad de la Amazonia
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
