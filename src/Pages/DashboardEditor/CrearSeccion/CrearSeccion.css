@@ -1,0 +1,187 @@
+/* Paleta de Colores Principal */
+:root {
+  --secc-color-primary: #00A896;        /* Verde Agua (Principal) */
+  --secc-color-secondary: #008170;      /* Tono Oscuro para Hover */
+  --secc-color-background: #f0f2f5;     /* Fondo de la página (gris muy claro) */
+  --secc-color-card: #ffffff;           /* Blanco (Fondo de la tarjeta) */
+  --secc-color-text-dark: #1f2937;      /* Texto principal (casi negro) */
+  --secc-color-text-medium: #4b5563;    /* Etiquetas y texto secundario */
+  --secc-color-border: #e5e7eb;         /* Borde sutil */
+  --secc-color-success: #2ecc71;        /* Verde para éxito */
+  --secc-color-error: #e74c3c;          /* Rojo para error */
+}
+
+/* --- 1. Contenedor Principal --- */
+.secc-form-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: var(--secc-color-card);
+  padding: 35px 45px;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  color: var(--secc-color-text-dark);
+  font-family: "Inter", sans-serif;
+}
+
+.secc-form-container h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  color: var(--secc-color-primary);
+  font-weight: 700;
+  padding-bottom: 5px;
+}
+
+/* --- 2. Formulario y Campos --- */
+.secc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.secc-form-group label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--secc-color-text-medium);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.secc-form-group input,
+.secc-form-group textarea {
+  width: 100%;
+  border: 1px solid var(--secc-color-border);
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  color: var(--secc-color-text-dark);
+  background-color: var(--secc-color-background);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.secc-form-group input:focus,
+.secc-form-group textarea:focus {
+  outline: none;
+  border-color: var(--secc-color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.15);
+  background-color: var(--secc-color-card);
+}
+
+.secc-form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* --- Mensajes de Estado --- */
+.secc-message {
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.secc-message-success {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: var(--secc-color-success);
+    border: 1px solid var(--secc-color-success);
+}
+
+.secc-message-error {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--secc-color-error);
+    border: 1px solid var(--secc-color-error);
+}
+
+
+/* --- Preview de Imagen --- */
+.secc-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.secc-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid var(--secc-color-primary);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.secc-preview p {
+    font-size: 0.9rem;
+    color: var(--secc-color-text-medium);
+}
+
+
+/* --- 3. Botones de Acción --- */
+.secc-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.secc-btn {
+  padding: 12px 25px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.secc-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Botón Guardar (Verde Agua) */
+.secc-btn-guardar {
+  background-color: var(--secc-color-primary);
+  color: var(--secc-color-card);
+  box-shadow: 0 4px 10px rgba(0, 168, 150, 0.3);
+}
+
+.secc-btn-guardar:not(:disabled):hover {
+  background-color: var(--secc-color-secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(0, 168, 150, 0.4);
+}
+
+/* Botón Cancelar */
+.secc-btn-cancelar {
+  background-color: var(--secc-color-border);
+  color: var(--secc-color-text-dark);
+}
+
+.secc-btn-cancelar:not(:disabled):hover {
+  background-color: #c9cdd2; 
+  transform: translateY(-1px);
+}
+
+
+/* Responsividad */
+@media (max-width: 600px) {
+    .secc-form-container {
+        padding: 25px 20px;
+        margin: 20px 10px;
+    }
+    .secc-form-container h2 {
+        font-size: 1.8rem;
+    }
+    .secc-acciones {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .secc-btn {
+        width: 100%;
+    }
+}

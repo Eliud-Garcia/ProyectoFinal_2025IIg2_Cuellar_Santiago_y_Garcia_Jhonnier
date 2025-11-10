@@ -103,6 +103,7 @@
 
 .reporter-content-header h1 {
   color: var(--reporter-color-primary);
+  margin-left: 2%;
   margin-bottom: 20px;
 }
 

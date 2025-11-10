@@ -90,13 +90,20 @@ const GestionarSecciones = () => {
   if (loading) return <p>Cargando secciones...</p>;
 
   return (
-    <div className="gestion-container">
-      <div className="header-secciones">
+    <div className="secc-gestion-container">
+      <div className="secc-header">
         <h1>Gestión de Secciones</h1>
+        <button 
+          className="secc-btn-crear"
+          onClick={() => navigate(`/dashboard-editor/crear-seccion`)}
+        >
+          ➕ Crear Sección
+        </button>
       </div>
 
-      <div className="tabla">
-        <div className="tabla-header">
+      <div className="secc-tabla">
+        {/* Encabezado de la tabla (solo visible en escritorio) */}
+        <div className="secc-tabla-header">
           <span>ICONO</span>
           <span>NOMBRE</span>
           <span>DESCRIPCIÓN</span>
@@ -104,39 +111,52 @@ const GestionarSecciones = () => {
           <span>ACCIONES</span>
         </div>
 
+        {/* Filas de la tabla */}
         {secciones.map((s) => (
-          <div className="tabla-row" key={s.id_seccion}>
-            <div className="celda" data-label="ICONO">
-              <img src={s.url_image} alt={s.nombre} className="icono" />
+          <div className="secc-tabla-row" key={s.id_seccion}>
+            
+            <div className="secc-celda secc-icono" data-label="ICONO">
+              <img src={s.url_image} alt={s.nombre} className="secc-img" />
             </div>
-            <div className="celda nombre" data-label="NOMBRE">{s.nombre}</div>
-            <div className="celda descripcion" data-label="DESCRIPCIÓN">{s.descripcion}</div>
 
-            <div className="celda estado" data-label="ESTADO">
-              <label className="switch">
+            <div className="secc-celda secc-nombre" data-label="NOMBRE">
+                <span className="secc-label-mobile">NOMBRE:</span>
+                <p>{s.nombre}</p>
+            </div>
+            
+            <div className="secc-celda secc-descripcion" data-label="DESCRIPCIÓN">
+                <span className="secc-label-mobile">DESCRIPCIÓN:</span>
+                <p>{s.descripcion}</p>
+            </div>
+
+            <div className="secc-celda secc-estado" data-label="ESTADO">
+              <span className="secc-label-mobile">ESTADO:</span>
+              <label className="secc-switch">
                 <input
                   type="checkbox"
                   checked={s.estado === 1}
                   onChange={() => toggleEstado(s.id_seccion, s.estado)}
                 />
-                <span className="slider"></span>
+                <span className="secc-slider"></span>
               </label>
-              <span className={s.estado === 1 ? "activo" : "inactivo"}>
+              <span className={s.estado === 1 ? "secc-tag-activo" : "secc-tag-inactivo"}>
                 {s.estado === 1 ? "Activo" : "Inactivo"}
               </span>
             </div>
 
-            <div className="celda acciones" data-label="ACCIONES">
+            <div className="secc-celda secc-acciones" data-label="ACCIONES">
               <button
-                className="btn editar"
-                onClick={() => navigate(`/dashboard-editor/editar/${s.id_seccion}`)}
+                className="secc-btn secc-editar"
+                title="Editar"
+                onClick={() => navigate(`/dashboard-editor/editar-seccion/${s.id_seccion}`)}
               >
                 ✏️
               </button>
-              <button className="btn eliminar" onClick={() => handleDelete(s)}>
+              <button className="secc-btn secc-eliminar" title="Eliminar" onClick={() => handleDelete(s)}>
                 🗑️
               </button>
             </div>
+
           </div>
         ))}
       </div>

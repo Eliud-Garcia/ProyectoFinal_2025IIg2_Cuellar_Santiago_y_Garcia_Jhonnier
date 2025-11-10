@@ -1,90 +1,182 @@
-.gestion-container {
-  background: #f9fafc;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  overflow-x: auto; /* por si hay tablas muy anchas */
+/* Paleta de Colores Principal */
+:root {
+  --secc-color-primary: #00A896;
+  /* Verde Agua (Principal) */
+  --secc-color-secondary: #008170;
+  /* Tono Oscuro para Hover */
+  --secc-color-background: #f0f2f5;
+  /* Fondo de la página */
+  --secc-color-card: #ffffff;
+  /* Blanco (Fondo de la tarjeta) */
+  --secc-color-text-dark: #1f2937;
+  /* Texto principal */
+  --secc-color-border: #e5e7eb;
+  /* Borde sutil */
+  --secc-color-active: #2ecc71;
+  /* Verde para Activo */
+  --secc-color-inactive: #e74c3c;
+  /* Rojo para Inactivo */
 }
 
-.header-secciones {
+/* --- 1. Contenedor General --- */
+.secc-gestion-container {
+  padding: 20px;
+  background-color: var(--secc-color-background);
+  min-height: 100vh;
+}
+
+.secc-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+  margin-bottom: 25px;
+  padding: 0 10px;
 }
 
-.header-secciones h1 {
+.secc-header h1 {
+  color: var(--secc-color-text-dark);
   font-size: 1.8rem;
-  color: #1e293b;
+  font-weight: 700;
 }
 
-.btn-nueva {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.tabla {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* ---------- Tabla en escritorio ---------- */
-.tabla-header,
-.tabla-row {
-  display: grid;
-  grid-template-columns: 100px 150px 1fr 150px 150px;
-  align-items: center;
-  background: white;
-  border-radius: 10px;
+.secc-btn-crear {
+  background-color: var(--secc-color-primary);
+  color: var(--secc-color-card);
   padding: 10px 15px;
-}
-
-.tabla-header {
-  font-weight: bold;
-  background: #eef1f9;
-  color: #334155;
-}
-
-.tabla-row {
-  transition: transform 0.2s ease;
-}
-
-.tabla-row:hover {
-  transform: scale(1.01);
-}
-
-.icono {
-  width: 40px;
-  height: 40px;
+  border: none;
   border-radius: 8px;
-  object-fit: cover;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.estado {
+.secc-btn-crear:hover {
+  background-color: var(--secc-color-secondary);
+}
+
+/* --- 2. Estilo de la Tabla (Escritorio) --- */
+.secc-tabla {
+  background-color: var(--secc-color-card);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  width: 100%;
+}
+
+.secc-tabla-header {
+  display: flex;
+  background-color: var(--secc-color-primary);
+  color: var(--secc-color-card);
+  font-weight: 700;
+  padding: 15px 20px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.secc-tabla-header span {
+  flex: 1;
+  text-align: center;
+}
+
+.secc-tabla-header span:nth-child(2) {
+  flex: 1.5;
+  text-align: left;
+}
+
+/* Nombre */
+.secc-tabla-header span:nth-child(3) {
+  flex: 2;
+  text-align: left;
+}
+
+/* Descripción */
+
+/* Estilos de Fila */
+.secc-tabla-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--secc-color-border);
+  transition: background-color 0.2s;
 }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 22px;
+.secc-tabla-row:hover {
+  background-color: #f7f9fb;
 }
 
-.switch input {
+.secc-celda {
+  flex: 1;
+  padding: 0 5px;
+  color: var(--secc-color-text-dark);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.secc-nombre {
+  flex: 1.5;
+  text-align: left;
+}
+
+.secc-descripcion {
+  flex: 2;
+  text-align: left;
+}
+
+/* Ocultar etiquetas móviles en escritorio */
+.secc-label-mobile {
   display: none;
 }
 
-.slider {
+/* Imagen/Icono */
+.secc-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--secc-color-border);
+}
+
+/* --- 3. Switch de Estado --- */
+.secc-estado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.secc-tag-activo,
+.secc-tag-inactivo {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.secc-tag-activo {
+  background-color: rgba(46, 204, 113, 0.15);
+  color: var(--secc-color-active);
+}
+
+.secc-tag-inactivo {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: var(--secc-color-inactive);
+}
+
+/* Toggle Switch Styling */
+.secc-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.secc-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.secc-slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -92,111 +184,143 @@
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  border-radius: 22px;
-  transition: 0.3s;
+  transition: 0.4s;
+  border-radius: 20px;
 }
 
-.slider:before {
+.secc-slider:before {
   position: absolute;
   content: "";
   height: 16px;
   width: 16px;
-  left: 4px;
-  bottom: 3px;
+  left: 2px;
+  bottom: 2px;
   background-color: white;
+  transition: 0.4s;
   border-radius: 50%;
-  transition: 0.3s;
 }
 
-input:checked + .slider {
-  background-color: #4caf50;
+input:checked+.secc-slider {
+  background-color: var(--secc-color-primary);
 }
 
-input:checked + .slider:before {
-  transform: translateX(18px);
+input:checked+.secc-slider:before {
+  transform: translateX(20px);
 }
 
-.activo {
-  color: #4caf50;
-  font-weight: bold;
+
+/* --- 4. Botones de Acción --- */
+.secc-acciones {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
 
-.inactivo {
-  color: #f44336;
-  font-weight: bold;
-}
-
-.btn {
-  background: transparent;
+.secc-btn {
+  background: none;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.2rem;
+  padding: 5px;
+  transition: transform 0.2s;
+  border-radius: 4px;
 }
 
-.btn:hover {
+.secc-btn:hover {
   transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* ---------- 🔹 Responsive (celular) ---------- */
+
+/* ======================================= */
+/* --- 5. Responsividad (Móviles) --- */
+/* ======================================= */
 @media (max-width: 768px) {
-  .gestion-container {
-    padding: 1rem;
+  .secc-gestion-container {
+    padding: 10px;
   }
 
-  .tabla-header {
-    display: none; /* Ocultamos el encabezado fijo */
+  .secc-tabla {
+    box-shadow: none;
+    /* Eliminar sombra en móviles */
+    background-color: transparent;
   }
 
-  .tabla-row {
-    display: grid;
-    grid-template-columns: 1fr; /* las celdas se apilan verticalmente */
-    background: white;
-    border-radius: 10px;
-    padding: 12px;
-    gap: 8px;
-    position: relative;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  .secc-tabla-header {
+    display: none;
+    /* Ocultar encabezado de tabla */
   }
 
-  .tabla-row .celda {
-    display: flex;
+  .secc-tabla-row {
     flex-direction: column;
-    gap: 4px;
+    align-items: flex-start;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background-color: var(--secc-color-card);
+    /* Cada fila es una tarjeta */
+    border: 1px solid var(--secc-color-border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   }
 
-  .tabla-row .celda::before {
-    content: attr(data-label);
-    font-weight: bold;
-    color: #475569;
-    font-size: 0.85rem;
+  .secc-tabla-row:hover {
+    background-color: var(--secc-color-card);
+    /* No cambiar de color al hacer hover en móvil */
   }
 
-  .celda.nombre {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #1e293b;
-  }
-
-  .celda.descripcion {
-    font-size: 0.9rem;
-    color: #475569;
-  }
-
-  .estado {
-    flex-direction: row;
-    align-items: start;
-    justify-content: flex-start;
-  }
-
-  .celda.acciones {
+  .secc-celda {
     display: flex;
-    align-items: start;
-    justify-content: flex-start;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 8px 0;
+    text-align: left;
+    border-bottom: 1px dashed var(--secc-color-border);
   }
 
-  .icono {
-    width: 50px;
-    height: 50px;
+  .secc-celda:last-child {
+    border-bottom: none;
+  }
+
+  /* Mostrar etiqueta de campo en móvil */
+  .secc-label-mobile {
+    display: block;
+    font-weight: 700;
+    color: var(--secc-color-secondary);
+    font-size: 0.9rem;
+  }
+
+  /* Ajustes específicos para campos */
+  .secc-icono {
+    justify-content: center;
+    border-bottom: none;
+    padding: 10px 0;
+  }
+
+  .secc-descripcion p {
+    /* Limitar la descripción para que no sea muy larga */
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .secc-estado {
+    flex-direction: row;
+    gap: 15px;
+    justify-content: flex-start;
+  }
+
+  .secc-estado>* {
+    margin: 0;
+  }
+
+  .secc-acciones {
+    justify-content: flex-end;
+    border-top: 1px solid var(--secc-color-border);
+    padding-top: 10px;
+    margin-top: 10px;
   }
 }

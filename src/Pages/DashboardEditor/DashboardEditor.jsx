@@ -1,75 +1,88 @@
 import React, { useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient.js";
-import "./DashboardEditor.css";
-import AccessDenied from "../../Components/AccessDenied/AccessDenied.jsx";
 import { useAuth } from '../../Hooks/useAuth.js';
+import AccessDenied from "../../Components/AccessDenied/AccessDenied.jsx";
+
+import "./DashboardEditor.css"; 
 
 const DashboardEditor = () => {
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate("/");
   };
 
-  //pa validar que sea del rol editor
-    const { userData, checkingAuth, accessDenied } = useAuth('editor');
   
-    if (checkingAuth) return <div>Cargando...</div>;
-    if( accessDenied ) return <AccessDenied />;
-    if (userData && (userData.rol !== "editor")) return <AccessDenied />;
+  const { userData, checkingAuth, accessDenied } = useAuth('editor'); // Usando useAuth sin parámetro
+  
+  // Lógica de seguridad dentro del componente (redundante si usas ProtectedRoute, pero seguro)
+  if (checkingAuth) return <div>Cargando...</div>;
+  if( accessDenied ) return <AccessDenied />;
+  // **Validación de rol 'editor'**
+  if (userData && (userData.rol !== "editor")) return <AccessDenied />;
+  
 
   return (
-    <div className={`dashboard-container ${menuOpen ? "menu-open" : ""}`}>
-      {/* Header para móvil */}
-      <header className="dashboard-header">
-        <div className="logo">
-          📰 <span>Amazon</span>News
-          
-        </div>
-        <button
-          className="menu-toggle"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          ☰
-        </button>
-      </header>
+    <div className="editor-dashboard-page">
+      {/* Botón menú para móviles */}
+      <button
+        className="editor-menu-toggle"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        aria-label={sidebarOpen ? "Cerrar menú" : "Abrir menú"}
+      >
+        <span className="editor-menu-icon">{sidebarOpen ? "✕" : "☰"}</span>
+      </button>
 
       {/* Sidebar */}
-      <aside className="sidebar">
-        <nav className="menu">
+      <aside className={`editor-sidebar ${sidebarOpen ? "open" : ""}`}>
+        <h2 className="editor-logo">
+          <span className="editor-logo-icon">
+            ⭐ Panel del Editor
+          </span>
+        </h2>
+
+        <nav className="editor-menu">
           <NavLink
+            // Rutas ajustadas para el editor
             to="/dashboard-editor/listado-noticias"
             className={({ isActive }) =>
-              `menu-item ${isActive ? "active" : ""}`
+              `editor-menu-item ${isActive ? "active" : ""}`
             }
+            onClick={() => setSidebarOpen(false)}
           >
-            <span className="icon">📝</span>
-            <span>Noticias</span>
+            <span className="editor-icon">👀</span>
+            <span>gestionar noticias</span>
           </NavLink>
 
           <NavLink
             to="/dashboard-editor/listado-secciones"
             className={({ isActive }) =>
-              `menu-item ${isActive ? "active" : ""}`
+              `editor-menu-item ${isActive ? "active" : ""}`
             }
+            onClick={() => setSidebarOpen(false)}
           >
-            <span className="icon">📂</span>
-            <span>Secciones</span>
+            <span className="editor-icon">✅</span>
+            <span>gestionar secciones</span>
           </NavLink>
 
-          <button className="menu-item logout" onClick={handleLogout}>
-            <span className="icon">🚪</span>
-            <span>Salir</span>
+          <button className="editor-menu-item editor-logout" onClick={handleLogout}>
+            <span className="editor-icon">🚪</span>
+            <span>Cerrar Sesión</span>
           </button>
         </nav>
       </aside>
 
       {/* Contenido principal */}
-      <main className="content">
-        <Outlet />
+      <main className="editor-content">
+        <div className="editor-content-header">
+          <h1>Bienvenid@ {userData.nombre_completo}</h1> 
+        </div>
+        <div className="editor-content-body">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

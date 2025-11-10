@@ -25,6 +25,9 @@ import DashboardEditor from './Pages/DashboardEditor/DashboardEditor.jsx';
 import GestionarNoticias from './Pages/DashboardEditor/GestionarNoticias/GestionarNoticias.jsx';
 import GestionarSecciones from './Pages/DashboardEditor/GestionarSecciones/GestionarSecciones.jsx';
 import EditarSeccion from './Pages/DashboardEditor/EditarSeccion/EditarSeccion.jsx';
+import CrearSeccion from './Pages/DashboardEditor/CrearSeccion/CrearSeccion.jsx';
+import EditarNoticia from './Pages/DashboardEditor/EditarNoticia/EditarNoticia.jsx';
+
 const App = () => {
   return (
     <>
@@ -53,7 +56,9 @@ const App = () => {
             <Route path="/dashboard-editor" element={<DashboardEditor />}>
               <Route path="listado-noticias" element={<GestionarNoticias />} />
               <Route path="listado-secciones" element={<GestionarSecciones />} />
-              <Route path="editar/:id" element={<EditarSeccion />} />
+              <Route path="crear-seccion" element={<CrearSeccion />} />
+              <Route path="editar-seccion/:id" element={<EditarSeccion />} />
+              <Route path="editar-noticia/:id" element={<EditarNoticia />} />
             </Route>
 
         </Routes>
