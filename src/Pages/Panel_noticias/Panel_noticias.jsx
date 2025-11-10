@@ -16,9 +16,9 @@ const Panel_noticias = () => {
 
   useEffect(() => {
     const obtenerSecciones = async () => {
-      const { data, error } = await supabase.from('Seccion').select('*');
+      const { data, error } = await supabase.from('Seccion').select('*').eq("estado", 1);
       if (data) {
-        console.log(data);
+        //console.log(data);
         setSecciones(data);
       }
     }
