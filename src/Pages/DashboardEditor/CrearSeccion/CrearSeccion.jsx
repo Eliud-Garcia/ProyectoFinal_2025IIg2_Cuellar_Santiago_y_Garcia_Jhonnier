@@ -104,7 +104,7 @@ const CrearSeccion = () => {
     };
 
     const handleCancel = () => {
-        navigate('/dashboard-editor/gestionar-secciones');
+        navigate('/dashboard-editor/listado-secciones');
     };
 
     return (
