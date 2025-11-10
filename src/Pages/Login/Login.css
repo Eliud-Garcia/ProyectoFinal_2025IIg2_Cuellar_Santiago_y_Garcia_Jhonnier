@@ -42,7 +42,7 @@
   align-items: center;
   gap: 0.8rem;
   text-decoration: none;
-  color: #667eea;
+  color: #1aae9f;
   font-size: 1.8rem;
   font-weight: 800;
 }
@@ -124,7 +124,7 @@
 
 .login-form-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #1aae9f;
   background: white;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
@@ -148,7 +148,7 @@
 }
 
 .login-password-toggle:hover {
-  color: #667eea;
+  color: #1aae9f;
   background: rgba(102, 126, 234, 0.1);
 }
 
@@ -169,7 +169,7 @@
 .login-checkbox-input {
   width: 18px;
   height: 18px;
-  accent-color: #667eea;
+  accent-color: #1aae9f;
   cursor: pointer;
 }
 
@@ -181,7 +181,7 @@
 }
 
 .login-forgot-link {
-  color: #667eea;
+  color: #1aae9f;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -189,13 +189,13 @@
 }
 
 .login-forgot-link:hover {
-  color: #5a67d8;
+  color: #1aae9f;
   text-decoration: underline;
 }
 
 /* Botones */
 .login-button {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #1aae9f, #0B1E2D);
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -293,14 +293,14 @@
 }
 
 .login-signup-link a {
-  color: #667eea;
+  color: #1aae9f;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .login-signup-link a:hover {
-  color: #5a67d8;
+  color: #1aae9f;
   text-decoration: underline;
 }
 
@@ -436,7 +436,7 @@
 .login-button:focus,
 .login-forgot-link:focus,
 .login-signup-link a:focus {
-  outline: 2px solid #667eea;
+  outline: 2px solid #1aae9f;
   outline-offset: 2px;
 }
 
@@ -447,7 +447,7 @@
   }
   
   .login-button {
-    border: 2px solid #667eea;
+    border: 2px solid #1aae9f;
   }
 }
 

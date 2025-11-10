@@ -326,7 +326,7 @@ const Noticia = () => {
 
       {/* Botones de compartir */}
       <div className="botones-compartir">
-        <SocialMedias posicion="column" />
+        <SocialMedias posicion="column" size="40"/>
       </div>
 
       {/* Sección Hero */}
@@ -341,12 +341,12 @@ const Noticia = () => {
               className="imagen-hero-real"
             />
           ) : (
-            <span className="emoji-hero">{infoCategoria.icono}</span>
+            <span className="emoji-hero">'📰'</span>
           )}
         </div>
         <div className="overlay-hero">
           <div className="contenido-hero">
-            <span className="categoria-hero">{noticia.Seccion.nombre || 'General'}</span>
+            <span className="categoria-hero">{noticia.Seccion==null?"General":noticia.Seccion.nombre}</span>
             <h1 className="titulo-hero">{noticia.titulo || 'Sin título'}</h1>
             <p className="subtitulo-hero">
               {noticia.extracto || noticia.contenido?.substring(0, 200) || 'Sin descripción disponible'}
@@ -369,7 +369,7 @@ const Noticia = () => {
               </div>
               <div className="detalles-autor">
                 <h3 className="nombre-autor">{noticia.id_usuario_creador.nombre_completo || 'Anónimo'}</h3>
-                <p className="cargo-autor">Especialista en {noticia.Seccion.nombre || 'General'}</p>
+                <p className="cargo-autor">Especialista en {noticia.Seccion==null?"General":noticia.Seccion.nombre}</p>
               </div>
             </div>
             <div className="estadisticas-articulo">
@@ -403,7 +403,7 @@ const Noticia = () => {
               </div>
             </div>
             <p className="descripcion-biografia">
-              {`Especialista con amplia experiencia en ${noticia.Seccion.nombre || 'su área de expertise'}.`}
+              {`Especialista con amplia experiencia en ${(noticia.Seccion==null)?'su área de expertise':noticia.Seccion.nombre}.`}
             </p>
             <div className="social-biografia">
               <a href="#" className="icono-social" target="_blank" rel="noopener noreferrer">🐦</a>

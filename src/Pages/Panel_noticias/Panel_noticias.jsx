@@ -177,13 +177,13 @@ const Panel_noticias = () => {
                       />
                     ) : (
                       <span className="emoji-noticia">
-                        {categorias.find(cat => cat.nombre === noticia.categoria)?.icono || '📰'}
+                        {'📰'}
                       </span>
                     )}
                   </div>
                   <div className="contenido-tarjeta">
                     <div className="meta-tarjeta">
-                      <span className="categoria-tarjeta">{noticia.Seccion.nombre || 'General'}</span>
+                      <span className="categoria-tarjeta">{noticia.Seccion==null?"General":noticia.Seccion.nombre}</span>
                       <span className="fecha-tarjeta">
                         {formatearFechaCorta(noticia.fecha_creacion)}
                       </span>
@@ -214,7 +214,7 @@ const Panel_noticias = () => {
                   <div className="contenido-tendencia">
                     <h4 className="titulo-tendencia">{noticia.titulo || 'Sin título'}</h4>
                     <p className="meta-tendencia">
-                      {calcularTiempoRelativo(noticia.created_at)} • {noticia.Seccion.nombre || 'General'}
+                      {calcularTiempoRelativo(noticia.created_at)} • {noticia.Seccion==null?'General':noticia.Seccion.nombre}
                     </p>
                   </div>
                 </div>
@@ -244,7 +244,7 @@ const Panel_noticias = () => {
                 <div
                   key={seccion.nombre}
                   className="tarjeta-categoria"
-                  onClick={() => navigate(`/seccion/${seccion.nombre}`)}
+                  onClick={() => navigate(`/seccion/${seccion.nombre_id}`)}
                 >
                   <img
                     className="icono-categoria"

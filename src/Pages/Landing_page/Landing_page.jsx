@@ -89,7 +89,9 @@ const Landing_page = () => {
               Lee las noticias mas recientes
             </Link>
             <Link
-              to="/panel-noticias"
+              onClick={(e)=>{
+                handleSmoothScroll(e,'contact')
+              }}
               className="landing-btn-secondary"
             >
               Quiero contar una historia

@@ -51,7 +51,7 @@
   align-items: center;
   gap: 0.8rem;
   text-decoration: none;
-  color: #667eea;
+  color: #1aae9f;
   font-size: 1.8rem;
   font-weight: 800;
 }
@@ -139,7 +139,7 @@
 
 .register-form-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #1aae9f;
   background: white;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
@@ -173,7 +173,7 @@
 }
 
 .register-password-toggle:hover {
-  color: #667eea;
+  color: #1aae9f;
   background: rgba(102, 126, 234, 0.1);
 }
 
@@ -256,13 +256,13 @@
 }
 
 .register-role-input:checked + .register-role-label {
-  border-color: #667eea;
+  border-color: #1aae9f;
   background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
+  color: #1aae9f;
 }
 
 .register-role-label:hover {
-  border-color: #667eea;
+  border-color: #1aae9f;
   background: rgba(102, 126, 234, 0.05);
 }
 
@@ -277,7 +277,7 @@
 .register-terms-checkbox {
   width: 20px;
   height: 20px;
-  accent-color: #667eea;
+  accent-color: #1aae9f;
   cursor: pointer;
   margin-top: 0.1rem;
 }
@@ -291,7 +291,7 @@
 }
 
 .register-terms-label a {
-  color: #667eea;
+  color: #1aae9f;
   text-decoration: none;
   font-weight: 500;
 }
@@ -302,7 +302,7 @@
 
 /* Botones */
 .register-button {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #1aae9f,#0B1E2D);
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -407,14 +407,14 @@
 }
 
 .register-login-link a {
-  color: #667eea;
+  color: #1aae9f;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .register-login-link a:hover {
-  color: #5a67d8;
+  color: #0B1E2D;
   text-decoration: underline;
 }
 
@@ -572,7 +572,7 @@
 .register-button:focus,
 .register-login-link a:focus,
 .register-role-input:focus + .register-role-label {
-  outline: 2px solid #667eea;
+  outline: 2px solid #1aae9f;
   outline-offset: 2px;
 }
 
@@ -583,7 +583,7 @@
   }
   
   .register-button {
-    border: 2px solid #667eea;
+    border: 2px solid #1aae9f;
   }
 }
 

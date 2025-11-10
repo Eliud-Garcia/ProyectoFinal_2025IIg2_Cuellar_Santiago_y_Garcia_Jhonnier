@@ -45,7 +45,7 @@ const GestionarNoticias = () => {
     const { data, error } = await supabase
       .from("Noticia")
       .select("id_noticia, titulo, subtitulo, image_url, estado, created_at")
-      .in('estado', ['terminada', 'publicada', "desactivada"]) // las que estan en edicion no se traen
+      .in('estado', ['terminado', 'publicada', "desactivada",'borrador']) // las que estan en edicion no se traen
       .order("created_at", { ascending: false });
 
     if (error) {
