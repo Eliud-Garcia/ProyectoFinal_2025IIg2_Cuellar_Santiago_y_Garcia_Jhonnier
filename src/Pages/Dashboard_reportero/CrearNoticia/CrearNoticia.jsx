@@ -4,46 +4,41 @@ import "./CrearNoticia.css";
 import { supabase } from "../../../supabaseClient.js";
 import AccessDenied from "../../../Components/AccessDenied/AccessDenied.jsx";
 
-
 const CrearNoticia = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(""); // Contiene id_seccion
   const [content, setContent] = useState("");
-  const [status, setStatus] = useState("editing");
+  const [status, setStatus] = useState("editing"); // 'editing' o 'done'
   const [mainImage, setMainImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userAuth, setUserAuth] = useState(null);
-  
+
   const [categories, setCategories] = useState([]);
   const [userData, setUserData] = useState(null);
 
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
     const getUserAndCategories = async () => {
-      // Obtener usuario autenticado
       const { data, error } = await supabase.auth.getUser();
       if (error) console.error("Error al obtener usuario:", error.message);
       const authUser = data?.user || null;
       setUserAuth(authUser);
 
-      // Si no hay usuario autenticado, finalizar
       if (!authUser) {
         setCheckingAuth(false);
         return;
       }
 
-      // Obtener datos del usuario 
-      //se obtiene para saber el creador de la noticia
       const currentUserData = await getUser(authUser.id);
       setUserData(currentUserData);
 
-      // Obtener categorías
       const secciones = await fetchCategories();
       setCategories(secciones);
 
-    
+      setCheckingAuth(false);
     };
 
     getUserAndCategories();
@@ -55,7 +50,6 @@ const CrearNoticia = () => {
     return () => listener.subscription.unsubscribe();
   }, []);
 
-  // Obtener datos del usuario desde tabla Usuario
   const getUser = async (authId) => {
     try {
       const { data, error } = await supabase
@@ -72,7 +66,6 @@ const CrearNoticia = () => {
     }
   };
 
-  // Obtener categorías (secciones)
   const fetchCategories = async () => {
     try {
       const { data, error } = await supabase
@@ -88,26 +81,43 @@ const CrearNoticia = () => {
     }
   };
 
-  // Subir imagen al bucket
+
+
+  // Alternativa: Si quieres una URL firmada con expiración más larga o permanente
   const uploadNewsImage = async (file) => {
+    if (!userData || !userData.id_usuario) {
+      return { success: false, error: "No se pudo obtener el ID del usuario." };
+    }
+
     try {
       const fileExt = file.name.split(".").pop();
-      const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
-      const filePath = `/${fileName}`;
+      const fileName = `${userData.id_usuario}/${Math.random().toString(36).substring(2)}${Date.now()}.${fileExt}`;
+      const filePath = fileName;
 
+      // 1. Subir el archivo
       const { error: uploadError } = await supabase.storage
         .from("Imagenes_noticias")
-        .upload(filePath, file, { cacheControl: "3600", upsert: false });
+        .upload(filePath, file, {
+          cacheControl: "3600",
+          upsert: false
+        });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) throw new Error(uploadError.message);
 
-      const { data: { publicUrl } } = supabase.storage
+      // 2. Opción A: URL firmada por 1 año (más largo)
+      const { data: signedUrlData, error: signedUrlError } = await supabase.storage
         .from("Imagenes_noticias")
-        .getPublicUrl(filePath);
+        .createSignedUrl(filePath, 60 * 60 * 24 * 365); // 1 año en segundos
 
-      return { success: true, publicUrl, filePath };
+      if (signedUrlError) throw new Error(signedUrlError.message);
+
+      return {
+        success: true,
+        publicUrl: signedUrlData.signedUrl,
+        filePath
+      };
     } catch (error) {
-      console.error("Error subiendo imagen:", error);
+      console.error("Error subiendo imagen:", error.message);
       return { success: false, error: error.message };
     }
   };
@@ -154,9 +164,13 @@ const CrearNoticia = () => {
       let imageUrl = null;
       if (imageFile) {
         const uploadResult = await uploadNewsImage(imageFile);
-        if (!uploadResult.success) throw new Error(uploadResult.error);
+        if (!uploadResult.success) {
+          throw new Error(uploadResult.error);
+        }
         imageUrl = uploadResult.publicUrl;
       }
+
+      const newsStatus = status === "editing" ? "borrador" : "terminada";
 
       // Insertar noticia
       const { data, error } = await supabase
@@ -167,7 +181,7 @@ const CrearNoticia = () => {
             titulo: title.trim(),
             subtitulo: subtitle.trim(),
             contenido: content.trim(),
-            estado: status === "editing" ? "borrador" : "terminado",
+            estado: newsStatus,
             image_url: imageUrl,
             id_categoria: category || null,
           },
@@ -197,9 +211,20 @@ const CrearNoticia = () => {
     setStatus("editing");
   };
 
+  if (checkingAuth) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+        <p>Verificando autenticación y cargando datos...</p>
+      </div>
+    );
+  }
+
+  if (!userAuth) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div className="create-news-container">
-      {/* ---------- Formulario principal ---------- */}
       <div className="create-news-main">
         <div className="create-news-form">
           <h1>Crear Nueva Noticia</h1>
@@ -269,7 +294,6 @@ const CrearNoticia = () => {
         </div>
       </div>
 
-      {/* ---------- Barra lateral ---------- */}
       <div className="create-news-sidebar">
         <div className="sidebar-box">
           <h3>Estado</h3>
