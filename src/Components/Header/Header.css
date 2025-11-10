@@ -184,6 +184,7 @@
     top: 70px !important;
     left: 0 !important;
     width: 100% !important;
+    height: 100vh;
     background: white !important;
     flex-direction: column !important;
     align-items: stretch !important;
@@ -223,6 +224,10 @@
   }
 
   .landing-nav-links a::after {
+    display: none;
+  }
+
+  .landing-nav-buttons{
     display: none;
   }
 
