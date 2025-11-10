@@ -66,7 +66,8 @@ const Mis_noticias = () => {
         const { data: noticiasData, error } = await supabase
           .from('Noticia')
           .select('*')
-          .eq('id_usuario_creador', usuario.id_usuario);
+          .eq('id_usuario_creador', usuario.id_usuario)
+          .order("created_at", { ascending: false })
 
         if (error) {
           console.error('Error al obtener noticias:', error);
@@ -172,25 +173,19 @@ const Mis_noticias = () => {
   const obtenerClaseEstado = (estado) => {
     const estados = {
       borrador: 'badge-estado-borrador',
-      terminado: 'badge-estado-revision',
-      publicado: 'badge-estado-publicado',
-      edicion: 'badge-estado-borrador',
-      review: 'badge-estado-revision',
-      draft: 'badge-estado-borrador',
-      published: 'badge-estado-publicado'
+      terminada: 'badge-estado-revision',
+      publicada: 'badge-estado-publicado',
+     
     };
     return estados[estado] || 'badge-estado-borrador';
   };
 
   const obtenerTextoEstado = (estado) => {
     const estados = {
-      borrador: 'Edición',
-      terminado: 'Terminado',
-      publicado: 'Publicado',
-      edicion: 'Edición',
-      review: 'Terminado',
-      draft: 'Edición',
-      published: 'Publicado'
+      borrador: 'borrador',
+      terminada: 'terminado',
+      publicada: 'publicada',
+   
     };
     return estados[estado] || estado;
   };
@@ -315,7 +310,6 @@ const Mis_noticias = () => {
               <th width="120">Categoría</th>
               <th width="120">Estado</th>
               <th width="140">Fecha</th>
-              <th width="80">Vistas</th>
               <th width="60">Acciones</th>
             </tr>
           </thead>
@@ -346,19 +340,15 @@ const Mis_noticias = () => {
                   </td>
                   <td>
                     <span className={`badge-estado-filtros ${obtenerClaseEstado(noticia.estado)}`}>
-                      {obtenerTextoEstado(noticia.estado)}
+                      {(noticia.estado)}
                     </span>
                   </td>
                   <td>
                     <div className="informacion-fecha">
-                      {formatearFecha(noticia.fecha_creacion || noticia.fecha)}
+                      {formatearFecha(noticia.created_at || noticia.fecha)}
                     </div>
                   </td>
-                  <td>
-                    <div className="contador-vistas">
-                      {formatearVistas(noticia.vistas || 0)}
-                    </div>
-                  </td>
+                  
                   <td>
                     <div className="desplegable-acciones" ref={el => dropdownRefs.current[id] = el}>
                       <button
@@ -480,7 +470,7 @@ const Mis_noticias = () => {
           <h1 className="titulo-pagina">Mis Noticias</h1>
           <button
             className="boton-nueva-noticia"
-            onClick={() => navigate('/dashboard_reportero/crear-noticia')}
+            onClick={() => navigate('/dashboard-reportero/crear-noticia')}
           >
             ➕ <span>Nueva Noticia</span>
           </button>
@@ -511,8 +501,8 @@ const Mis_noticias = () => {
                 onChange={(e) => setFiltroEstado(e.target.value)}
               >
                 <option value="">Todos</option>
-                <option value="borrador">Edición</option>
-                <option value="terminado">Terminado</option>
+                <option value="borrador">borrador</option>
+                <option value="terminado">publicada</option>
               </select>
             </div>
             

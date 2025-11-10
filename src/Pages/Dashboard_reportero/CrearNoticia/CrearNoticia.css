@@ -50,7 +50,7 @@
 .create-news-form select:focus,
 .create-news-form textarea:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #00A896;
 }
 
 .create-news-form textarea {
@@ -79,7 +79,7 @@
 }
 
 .upload-placeholder:hover {
-    border-color: #007bff;
+    border-color: #00A896;
     background: #f8f9fa;
 }
 
@@ -153,7 +153,7 @@
 }
 
 .radio-option.active {
-    border-color: #007bff;
+    border-color: #00A896;
     background: #f0f8ff;
 }
 
@@ -183,7 +183,7 @@
 .sidebar-buttons .primary {
     width: 100%;
     padding: 0.75rem;
-    background: #007bff;
+    background: #00A896;
     color: white;
     border: none;
     border-radius: 8px;
@@ -194,7 +194,7 @@
 }
 
 .sidebar-buttons .primary:hover:not(:disabled) {
-    background: #0056b3;
+    background: #0a9f90;
 }
 
 .sidebar-buttons .primary:disabled {
