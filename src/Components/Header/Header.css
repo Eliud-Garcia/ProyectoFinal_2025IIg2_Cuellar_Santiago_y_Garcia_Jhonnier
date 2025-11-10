@@ -56,6 +56,10 @@
   transition: all 0.3s ease;
 }
 
+.landing-mobile-buttons {
+  display: none;
+}
+
 .landing-nav-links a {
   color: #0b132b;
   text-decoration: none;
@@ -164,64 +168,58 @@
 
 /* ==== MOBILE ==== */
 @media (max-width: 768px) {
-  /* Overlay para el menú móvil */
-  .mobile-menu-overlay {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 998;
-    animation: fadeIn 0.3s ease;
-  }
   .landing-nav-container {
     padding: 12px 16px;
   }
 
+  /* Ocultar enlaces en móvil por defecto */
   .landing-nav-links {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    background: white;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 0;
-    border-top: 1px solid #e9ecef;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                opacity 0.4s ease, 
-                padding 0.4s ease,
-                visibility 0.4s ease;
-    z-index: 999;
+    display: none;
   }
 
+  /* Mostrar cuando está abierto */
   .landing-nav-links.open {
-    max-height: 500px;
-    opacity: 1;
-    visibility: visible;
-    padding: 20px 0;
+    display: flex !important;
+    position: fixed !important;
+    top: 70px !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: white !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    padding: 20px 0 !important;
+    border-top: 1px solid #e9ecef !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    z-index: 1000 !important;
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .landing-nav-links a {
-    padding: 14px 24px;
+    padding: 16px 24px;
     text-align: center;
     border-bottom: 1px solid #f1f1f1;
     width: 100%;
     display: block;
     transition: background-color 0.2s ease, color 0.2s ease;
     font-size: 1rem;
+    color: #0b132b;
+    text-decoration: none;
   }
 
   .landing-nav-links a:last-of-type {
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: none;
   }
 
   .landing-nav-links a::after {
@@ -234,18 +232,19 @@
     color: #00a896;
   }
 
-  .landing-nav-buttons {
+  /* .landing-nav-buttons {
     display: none;
-  }
+  } */
 
   .landing-mobile-buttons {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
     padding: 20px 24px 0 24px;
     margin-top: 10px;
     border-top: 2px solid #e9ecef;
+    width: 100%;
   }
 
   .landing-mobile-buttons .landing-btn {
