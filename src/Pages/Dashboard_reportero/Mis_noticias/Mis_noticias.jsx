@@ -8,26 +8,30 @@ const Mis_noticias = () => {
   const [usuario, setUsuario] = useState(null);
   const [noticias, setNoticias] = useState([]);
   const [noticiasFiltradas, setNoticiasFiltradas] = useState([]);
-  
+
   // Estados de filtros
   const [terminoBusqueda, setTerminoBusqueda] = useState('');
   const [filtroEstado, setFiltroEstado] = useState('');
   const [filtroCategoria, setFiltroCategoria] = useState('');
   const [filtroFecha, setFiltroFecha] = useState('');
-  
+
   // Estados de vista y selección
   const [vistaActual, setVistaActual] = useState('tabla');
   const [noticiasSeleccionadas, setNoticiasSeleccionadas] = useState(new Set());
   const [mostrarAccionesMasivas, setMostrarAccionesMasivas] = useState(false);
-  
+
   // Estados de paginación
   const [paginaActual, setPaginaActual] = useState(1);
   const noticiasPorPagina = 12;
-  
+
   // Estados de UI
   const [menuAbiertoId, setMenuAbiertoId] = useState(null);
   const dropdownRefs = useRef({});
-  
+
+
+  const [categories, setCategories] = useState([]);
+
+
   const navigate = useNavigate();
 
   // Obtener usuario actual
@@ -35,7 +39,7 @@ const Mis_noticias = () => {
     const obtenerUsuario = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
-        
+
         if (user) {
           const { data: usuarioData, error } = await supabase
             .from('Usuario')
@@ -57,6 +61,30 @@ const Mis_noticias = () => {
     obtenerUsuario();
   }, []);
 
+  useEffect(() => {
+    const obtenerCategorias = async () => {
+      const secciones = await fetchCategories();
+      setCategories(secciones);
+    };
+
+    obtenerCategorias();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("Seccion")
+        .select("id_seccion, nombre, descripcion")
+        .order("nombre", { ascending: true });
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error("Error al obtener categorías:", error.message);
+      return [];
+    }
+  };
+
   // Obtener noticias del usuario
   useEffect(() => {
     const obtenerNoticias = async () => {
@@ -66,8 +94,7 @@ const Mis_noticias = () => {
         const { data: noticiasData, error } = await supabase
           .from('Noticia')
           .select('*')
-          .eq('id_usuario_creador', usuario.id_usuario)
-          .order("created_at", { ascending: false })
+          .eq('id_usuario_creador', usuario.id_usuario);
 
         if (error) {
           console.error('Error al obtener noticias:', error);
@@ -175,30 +202,29 @@ const Mis_noticias = () => {
       borrador: 'badge-estado-borrador',
       terminada: 'badge-estado-revision',
       publicada: 'badge-estado-publicado',
-     
     };
     return estados[estado] || 'badge-estado-borrador';
   };
 
   const obtenerTextoEstado = (estado) => {
     const estados = {
-      borrador: 'borrador',
-      terminada: 'terminado',
-      publicada: 'publicada',
-   
+      borrador: 'Borrador',
+      terminada: 'Terminada',
+      publicada: 'Publicada',
+
     };
     return estados[estado] || estado;
   };
 
-  const obtenerTextoCategoria = (categoria) => {
-    const categorias = {
-      politica: 'Política',
-      deportes: 'Deportes',
-      tecnologia: 'Tecnología',
-      cultura: 'Cultura',
-      economia: 'Economía'
-    };
-    return categorias[categoria] || categoria;
+  const obtenerTextoCategoria = (id_categoria) => {
+    if (!id_categoria) return "N/A";
+
+    const categoriaEncontrada = categories.find(element =>
+      element.id_seccion === id_categoria
+    );
+
+    // 2. Si se encuentra el objeto, devolvemos su nombre; si no, un fallback
+    return categoriaEncontrada ? categoriaEncontrada.nombre : 'Categoría Desconocida';
   };
 
   // Funciones de manejo de eventos
@@ -226,7 +252,7 @@ const Mis_noticias = () => {
 
   const editarNoticia = (id) => {
     console.log('Editando noticia:', id);
-    // navigate(`/editar-noticia/${id}`);
+    navigate(`/dashboard-reportero/reportero-editar-noticia/${id}`);
   };
 
   const verPreview = (id) => {
@@ -261,29 +287,6 @@ const Mis_noticias = () => {
     }
   };
 
-  const manejarAccionMasiva = (accion) => {
-    const ids = Array.from(noticiasSeleccionadas);
-    console.log(`Acción masiva: ${accion} en noticias:`, ids);
-    
-    // Implementar lógica de acciones masivas
-    switch (accion) {
-      case 'publicar':
-        // Implementar publicación masiva
-        break;
-      case 'archivar':
-        // Implementar archivado masivo
-        break;
-      case 'eliminar':
-        if (window.confirm(`¿Estás seguro de que quieres eliminar ${ids.length} noticias?`)) {
-          // Implementar eliminación masiva
-        }
-        break;
-      default:
-        break;
-    }
-    
-    setNoticiasSeleccionadas(new Set());
-  };
 
   // Paginación
   const indiceInicial = (paginaActual - 1) * noticiasPorPagina;
@@ -317,13 +320,13 @@ const Mis_noticias = () => {
             {noticiasPagina.map((noticia) => {
               const id = noticia.id_noticia || noticia.id;
               const estaSeleccionada = noticiasSeleccionadas.has(id);
-              
+
               return (
                 <tr key={id}>
                   <td>
                     <div className="miniatura-noticia">
                       {noticia.image_url ? (
-                        <img src={noticia.image_url} alt={noticia.titulo} />
+                        <img src={noticia.image_url} alt={noticia.titulo || 'Sin título'} />
                       ) : (
                         '📰'
                       )}
@@ -331,24 +334,23 @@ const Mis_noticias = () => {
                   </td>
                   <td>
                     <div className="titulo-noticia-tabla">{noticia.titulo || 'Sin título'}</div>
-                    <div className="extracto-noticia-tabla">{noticia.extracto || ''}</div>
                   </td>
                   <td>
                     <span className="etiqueta-categoria">
-                      {obtenerTextoCategoria(noticia.categoria)}
+                      {noticia.id_categoria ? obtenerTextoCategoria(noticia.id_categoria) : "N/A"}
                     </span>
                   </td>
                   <td>
                     <span className={`badge-estado-filtros ${obtenerClaseEstado(noticia.estado)}`}>
-                      {(noticia.estado)}
+                      {noticia.estado ? noticia.estado : "N/A"}
                     </span>
                   </td>
                   <td>
                     <div className="informacion-fecha">
-                      {formatearFecha(noticia.created_at || noticia.fecha)}
+                      {formatearFecha(noticia.created_at)}
                     </div>
                   </td>
-                  
+
                   <td>
                     <div className="desplegable-acciones" ref={el => dropdownRefs.current[id] = el}>
                       <button
@@ -369,15 +371,7 @@ const Mis_noticias = () => {
                           >
                             ✏️ Editar
                           </button>
-                          <button
-                            className="item-desplegable"
-                            onClick={() => {
-                              verPreview(id);
-                              setMenuAbiertoId(null);
-                            }}
-                          >
-                            👁️ Ver preview
-                          </button>
+
                           <button
                             className="item-desplegable peligro"
                             onClick={() => {
@@ -409,7 +403,7 @@ const Mis_noticias = () => {
         {noticiasPagina.map((noticia) => {
           const id = noticia.id_noticia || noticia.id;
           const estaSeleccionada = noticiasSeleccionadas.has(id);
-          
+
           return (
             <div key={id} className="tarjeta-noticia">
               <div className="cabecera-tarjeta">
@@ -492,7 +486,7 @@ const Mis_noticias = () => {
                 />
               </div>
             </div>
-            
+
             <div className="grupo-filtro">
               <label className="etiqueta-filtro">Estado</label>
               <select
@@ -501,11 +495,11 @@ const Mis_noticias = () => {
                 onChange={(e) => setFiltroEstado(e.target.value)}
               >
                 <option value="">Todos</option>
-                <option value="borrador">borrador</option>
-                <option value="terminado">publicada</option>
+                <option value="borrador">Edición</option>
+                <option value="terminado">Terminado</option>
               </select>
             </div>
-            
+
             <div className="grupo-filtro">
               <label className="etiqueta-filtro">Categoría</label>
               <select
@@ -521,7 +515,7 @@ const Mis_noticias = () => {
                 <option value="economia">Economía</option>
               </select>
             </div>
-            
+
             <div className="grupo-filtro">
               <label className="etiqueta-filtro">Vista</label>
               <div className="alternador-vista">
@@ -542,7 +536,7 @@ const Mis_noticias = () => {
           </div>
         </section>
 
-        
+
 
         {/* Estado Vacío */}
         {noticiasFiltradas.length === 0 && (
@@ -573,10 +567,12 @@ const Mis_noticias = () => {
         {vistaActual === 'tabla' && renderizarVistaTabla()}
         {vistaActual === 'tarjetas' && renderizarVistaTarjetas()}
 
-       
+
       </div>
     </div>
   );
 };
 
 export default Mis_noticias;
+
+

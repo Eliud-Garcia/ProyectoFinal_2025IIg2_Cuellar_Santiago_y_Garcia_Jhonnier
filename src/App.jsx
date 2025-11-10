@@ -18,7 +18,7 @@ import CrearNoticia from './Pages/Dashboard_reportero/CrearNoticia/CrearNoticia.
 import Noticia from './Components/Noticia/Noticia.jsx';
 import Seccion from './Pages/Secciones/Secciones.jsx'
 import PanelNoticia from "./Pages/Panel_noticias/Panel_noticias.jsx"
-
+import EditarNoticiaReportero from "./Pages/Dashboard_reportero/EditarNoticia/EditarNoticia.jsx";
 
 //editor
 import DashboardEditor from './Pages/DashboardEditor/DashboardEditor.jsx';
@@ -50,6 +50,8 @@ const App = () => {
             <Route path="/dashboard-reportero" element={<Dashboard_reportero />}>
               <Route path="crear-noticia" element={<CrearNoticia />} />
               <Route path="mis-noticias" element={<Mis_noticiasR />} />
+              <Route path="reportero-editar-noticia/:id" element={<EditarNoticiaReportero />} />
+              
             </Route>
 
           {/* Rutas protegidas para editor */}

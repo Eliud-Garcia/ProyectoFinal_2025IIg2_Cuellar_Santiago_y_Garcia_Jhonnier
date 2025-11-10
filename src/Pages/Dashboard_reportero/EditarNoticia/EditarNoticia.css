@@ -1,0 +1,343 @@
+/* Variables de Color (Reutilizadas para consistencia) */
+:root {
+  --color-principal: rgb(0, 168, 150);
+  --color-principal-hover: rgb(0, 134, 120);
+  --color-fondo: #f8f9fa;
+  --color-texto-principal: #343a40;
+  --color-texto-secundario: #6c757d;
+  --color-borde: #dee2e6;
+  --color-sombra-suave: rgba(0, 0, 0, 0.05);
+  --color-exito: #28a745;
+  --color-exito-hover: #218838;
+  --color-error: #dc3545;
+}
+
+/* --- Estructura Principal y Contenedor --- */
+
+/* Usado por ambos CrearNoticia y EditarNoticia */
+.create-news-container {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--color-fondo);
+}
+
+.create-news-main {
+  flex: 3; /* Ocupa la mayor parte del espacio */
+}
+
+.create-news-sidebar {
+  flex: 1; /* Ocupa la barra lateral */
+  min-width: 300px;
+}
+
+/* --- Títulos y Encabezados --- */
+
+.create-news-form h1,
+.title-editing {
+  font-size: 2rem;
+  color: var(--color-texto-principal);
+  font-weight: 700;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-borde);
+}
+
+/* --- Estilo de Formularios y Inputs --- */
+
+.create-news-form label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-texto-principal);
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
+
+.create-news-form input[type="text"],
+.create-news-form select,
+.create-news-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--color-texto-principal);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: white;
+}
+
+.create-news-form input:focus,
+.create-news-form select:focus,
+.create-news-form textarea:focus {
+  border-color: var(--color-principal);
+  box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.2);
+  outline: none;
+}
+
+.create-news-form textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+/* --- Componente Card/Box --- */
+
+.create-news-form,
+.sidebar-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px var(--color-sombra-suave);
+  margin-bottom: 30px; /* Separación entre cajas en el sidebar */
+}
+
+.sidebar-box h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-texto-principal);
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+/* --- Radio Options (Estado) --- */
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #fafafa;
+}
+
+.radio-option:hover {
+  background-color: #f1f1f1;
+}
+
+.radio-option.active {
+  border-color: var(--color-principal);
+  background-color: #e6f5f4; /* Fondo más claro del color principal */
+  box-shadow: 0 0 0 1px var(--color-principal);
+}
+
+.radio-option input[type="radio"] {
+  /* Ocultar el radio nativo y usar un estilo custom si es necesario, 
+     pero por simplicidad lo dejaremos visible */
+  transform: scale(1.2);
+  margin: 0;
+  accent-color: var(--color-principal); /* Color del check */
+}
+
+.radio-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-title {
+  font-weight: 600;
+  color: var(--color-texto-principal);
+  font-size: 1rem;
+}
+
+.option-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+}
+
+/* --- Botones de Acción --- */
+
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid var(--color-borde);
+}
+
+.sidebar-buttons button {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.sidebar-buttons .primary {
+  background-color: var(--color-principal);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 168, 150, 0.3);
+}
+
+.sidebar-buttons .primary:hover:not(:disabled) {
+  background-color: var(--color-principal-hover);
+  transform: translateY(-1px);
+}
+
+.sidebar-buttons .secondary {
+  background-color: var(--color-exito); /* Color verde para "Publicar/Revisión" */
+  color: white;
+}
+
+.sidebar-buttons .secondary:hover:not(:disabled) {
+  background-color: var(--color-exito-hover);
+  transform: translateY(-1px);
+}
+
+.sidebar-buttons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* --- Subida de Imagen --- */
+
+.image-upload {
+  border: 2px dashed var(--color-borde);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  background-color: #fcfcfc;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-upload:hover {
+  border-color: var(--color-principal);
+}
+
+.upload-placeholder {
+  display: block;
+  color: var(--color-texto-secundario);
+}
+
+.upload-placeholder p {
+  margin: 5px 0;
+  font-size: 1.1rem;
+}
+
+.upload-placeholder .subtext {
+  font-size: 0.85rem;
+}
+
+.image-preview {
+  position: relative;
+  width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Contiene la imagen sin cortarla */
+  display: block;
+  border-radius: 8px;
+}
+
+.remove-image {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--color-error);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+.remove-image:hover {
+  background-color: #c82333;
+}
+
+/* --- Estados de Carga y Error --- */
+
+.cargando-pagina,
+.acceso-denegado,
+.noticia-no-encontrada {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--color-texto-secundario);
+}
+
+.acceso-denegado h2,
+.noticia-no-encontrada h2 {
+  color: var(--color-error);
+  margin-bottom: 15px;
+}
+
+.acceso-denegado a,
+.noticia-no-encontrada a {
+  margin-top: 20px;
+  color: var(--color-principal);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.acceso-denegado a:hover,
+.noticia-no-encontrada a:hover {
+  color: var(--color-principal-hover);
+}
+
+/* --- Responsividad --- */
+
+@media (max-width: 1024px) {
+  .create-news-container {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .create-news-main,
+  .create-news-sidebar {
+    flex: none; /* Desactiva el flex-grow */
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 600px) {
+  .create-news-form,
+  .sidebar-box {
+    padding: 20px;
+  }
+
+  .create-news-form h1,
+  .title-editing {
+    font-size: 1.5rem;
+  }
+
+  .sidebar-buttons {
+    flex-direction: column;
+  }
+}
