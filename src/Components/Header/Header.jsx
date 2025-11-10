@@ -34,6 +34,7 @@ const Header = () => {
 
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
+    setMenuOpen(false); // Cerrar menú en móvil
 
     if (location.pathname !== "/") {
       sessionStorage.setItem("scrollTarget", targetId);
@@ -41,6 +42,10 @@ const Header = () => {
     } else {
       scrollToSection(targetId);
     }
+  };
+
+  const handleMobileLinkClick = () => {
+    setMenuOpen(false); // Cerrar menú al hacer clic en un enlace
   };
 
   const scrollToSection = (targetId) => {
@@ -56,6 +61,11 @@ const Header = () => {
       scrollToSection(targetId);
       sessionStorage.removeItem("scrollTarget");
     }
+  }, [location.pathname]);
+
+  // Cerrar el menú cuando cambia la ruta
+  useEffect(() => {
+    setMenuOpen(false);
   }, [location.pathname]);
 
 
@@ -89,6 +99,15 @@ const Header = () => {
             <a href="#contact" onClick={(e) => handleSmoothScroll(e, "contact")}>
               Contáctanos
             </a>
+            {/* Botones para móvil */}
+            <div className="landing-mobile-buttons">
+              <Link to="/panel-noticias" className="landing-btn explore" onClick={handleMobileLinkClick}>
+                Explora noticias
+              </Link>
+              <Link to="/login" className="landing-btn join" onClick={handleMobileLinkClick}>
+                Únete al equipo
+              </Link>
+            </div>
           </div>
 
           {/* === Desktop Buttons === */}
@@ -103,9 +122,14 @@ const Header = () => {
 
           {/* === Menu Toggle === */}
           <button
+            type="button"
             className={`menu-toggle ${menuOpen ? "active" : ""}`}
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setMenuOpen(!menuOpen);
+            }}
             aria-label="Toggle Menu"
+            aria-expanded={menuOpen}
           >
             <span className="bar"></span>
             <span className="bar"></span>
